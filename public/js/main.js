@@ -273,11 +273,72 @@ function renderSacredCreations() {
     }
 }
 
-// Show Product Modal (placeholder for future enhancement)
+// Stripe Configuration
+const stripe = Stripe('pk_test_your_stripe_publishable_key_here'); // Replace with your actual key
+
+// Show Product Modal with Purchase Option
 function showProductModal(button) {
-    // This would open a detailed product modal
-    // For now, we'll show a simple alert
-    alert('Product details modal would open here. This can be enhanced with a proper modal system for e-commerce integration.');
+    const productCard = button.closest('.product-card');
+    const productName = productCard.querySelector('h3').textContent;
+    const productPrice = productCard.querySelector('.text-gold').textContent;
+    const productDescription = productCard.querySelector('.text-muted').textContent;
+    
+    // Create modal HTML
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+    modal.innerHTML = `
+        <div class="bg-cream rounded-xl p-8 max-w-md w-full mx-4 relative">
+            <button class="absolute top-4 right-4 text-charcoal hover:text-gold" onclick="this.closest('.fixed').remove()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <h3 class="font-playfair text-2xl font-bold text-charcoal mb-4">${productName}</h3>
+            <p class="text-muted mb-4">${productDescription}</p>
+            <div class="mb-6">
+                <span class="text-2xl font-bold text-gold">${productPrice}</span>
+            </div>
+            <div class="space-y-3">
+                <button onclick="purchaseProduct('${productName}', '${productPrice}')" class="w-full bg-sage text-cream hover:bg-gold transition-all duration-300 py-3 rounded-lg font-medium">
+                    Purchase with Stripe
+                </button>
+                <button onclick="contactForCustomOrder('${productName}')" class="w-full border-2 border-sage text-sage hover:bg-sage hover:text-cream transition-all duration-300 py-3 rounded-lg font-medium">
+                    Custom Order Inquiry
+                </button>
+            </div>
+            <p class="text-xs text-muted mt-4 text-center">
+                Secure payment processing powered by Stripe
+            </p>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+}
+
+// Purchase Product Function
+function purchaseProduct(productName, price) {
+    // For now, redirect to contact form with product info
+    // Later, integrate with actual Stripe checkout
+    showNotification(`Stripe integration coming soon! Contact us about ${productName}`, 'info');
+    
+    // Scroll to contact form
+    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Contact for Custom Order
+function contactForCustomOrder(productName) {
+    // Pre-fill contact form
+    const nameField = document.getElementById('name');
+    const messageField = document.getElementById('message');
+    
+    if (messageField) {
+        messageField.value = `I'm interested in ${productName}. Please provide more details about custom orders, ingredients, and availability.`;
+    }
+    
+    // Scroll to contact form
+    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    
+    showNotification('Contact form pre-filled with your product inquiry!', 'success');
 }
 
 // Contact Form Handler

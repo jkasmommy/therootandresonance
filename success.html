@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful - The Root & Resonance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sage: '#9CAF88',
+                        gold: '#D4AF37',
+                        cream: '#F5F5DC',
+                        charcoal: '#36454F',
+                        muted: '#8B9A8B'
+                    },
+                    fontFamily: {
+                        'playfair': ['Playfair Display', 'serif'],
+                        'lato': ['Lato', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-cream font-lato min-h-screen flex items-center justify-center">
+    <div class="max-w-md mx-auto text-center p-8">
+        <div class="mb-8">
+            <div class="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h1 class="font-playfair text-3xl font-bold text-charcoal mb-4">Payment Successful!</h1>
+            <p class="text-muted mb-6">Thank you for your purchase from The Root & Resonance. Your order has been confirmed and you'll receive an email confirmation shortly.</p>
+        </div>
+        
+        <div class="space-y-4">
+            <a href="/" class="block bg-sage text-cream hover:bg-gold transition-all duration-300 py-3 px-6 rounded-lg font-medium">
+                Continue Shopping
+            </a>
+            <a href="#contact" class="block border-2 border-sage text-sage hover:bg-sage hover:text-cream transition-all duration-300 py-3 px-6 rounded-lg font-medium">
+                Contact Us
+            </a>
+        </div>
+        
+        <p class="text-sm text-muted mt-8">
+            Crafted with intention • The Root & Resonance LLC • Cortez, Colorado
+        </p>
+    </div>
+</body>
+</html>
