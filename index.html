@@ -12,6 +12,12 @@
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Snipcart -->
+    <link rel="preconnect" href="https://app.snipcart.com">
+    <link rel="preconnect" href="https://cdn.snipcart.com">
+    <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.2.0/default/snipcart.css" />
+    
     <script>
         tailwind.config = {
             theme: {
@@ -61,12 +67,20 @@
                     </h1>
                     <p class="text-sm text-muted italic">Crafted with Intention</p>
                 </div>
-                <div class="hidden md:flex space-x-8">
+                <div class="hidden md:flex space-x-8 items-center">
                     <a href="#home" class="nav-link text-charcoal hover:text-gold transition-colors duration-300">Home</a>
                     <a href="#apothecary" class="nav-link text-charcoal hover:text-gold transition-colors duration-300">Apothecary</a>
                     <a href="#sacred-creations" class="nav-link text-charcoal hover:text-gold transition-colors duration-300">Sacred Creations</a>
                     <a href="#about" class="nav-link text-charcoal hover:text-gold transition-colors duration-300">About</a>
                     <a href="#contact" class="nav-link text-charcoal hover:text-gold transition-colors duration-300">Contact</a>
+                    
+                    <!-- Snipcart Cart Button -->
+                    <button class="snipcart-checkout flex items-center text-charcoal hover:text-gold transition-colors duration-300 relative">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 1.5M7 13l1.5 1.5M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"></path>
+                        </svg>
+                        <span class="snipcart-items-count ml-1"></span>
+                    </button>
                 </div>
                 <button class="md:hidden text-charcoal hover:text-gold" id="mobile-menu-btn">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -243,7 +257,7 @@
                 <div>
                     <h3 class="font-playfair text-2xl font-bold mb-4">The Root & Resonance</h3>
                     <p class="text-cream/80 mb-4">Handcrafted apothecary and sacred geometry creations</p>
-                    <p class="text-sm text-cream/60">Crafted by The Root & Resonance LLC • Cortez, Colorado</p>
+                    <p class="text-sm text-cream/60">Crafted by The Root and Resonance, LLC • Cortez, Colorado</p>
                 </div>
                 <div>
                     <h4 class="font-medium mb-4">Quick Links</h4>
@@ -276,13 +290,17 @@
                 </div>
             </div>
             <div class="border-t border-cream/20 mt-8 pt-8 text-center text-cream/60">
-                <p>&copy; 2025 The Root & Resonance LLC. All rights reserved.</p>
+                <p>&copy; 2025 The Root and Resonance, LLC. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <!-- Stripe.js -->
     <script src="https://js.stripe.com/v3/"></script>
+    
+    <!-- Snipcart -->
+    <script async src="https://cdn.snipcart.com/themes/v3.2.0/default/snipcart.js"></script>
+    <div hidden id="snipcart" data-api-key="YOUR_SNIPCART_PUBLIC_API_KEY" data-config-modal-style="side"></div>
     
     <!-- Scripts -->
     <script src="js/main.js"></script>

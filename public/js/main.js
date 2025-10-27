@@ -1,70 +1,86 @@
 // Main JavaScript for The Root & Resonance Website
 
-// Product Data
+// Product Data for Snipcart
 const apothecaryProducts = [
     {
-        id: 1,
+        id: "moonlight-elixir",
         name: "Moonlight Elixir",
         category: "elixirs",
-        price: "$28.00",
+        price: 28.00,
         description: "A calming blend of chamomile, lavender, and moonstone essence for peaceful sleep.",
-        image: "images/moonlight-elixir.jpg"
+        image: "images/moonlight-elixir.jpg",
+        weight: "120", // in grams for shipping
+        dimensions: "5x5x10" // length x width x height in cm
     },
     {
-        id: 2,
+        id: "sunrise-vitality-tea",
         name: "Sunrise Vitality Tea",
-        category: "teas",
-        price: "$18.00",
+        category: "teas", 
+        price: 18.00,
         description: "Energizing morning blend with ginseng, yerba mate, and citrus herbs.",
-        image: "images/sunrise-tea.jpg"
+        image: "images/sunrise-tea.jpg",
+        weight: "85",
+        dimensions: "8x8x6"
     },
     {
-        id: 3,
+        id: "heart-healing-tincture",
         name: "Heart Healing Tincture",
         category: "remedies",
-        price: "$32.00",
+        price: 32.00,
         description: "Hawthorn berry and rose hip tincture for emotional and physical heart support.",
-        image: "images/heart-tincture.jpg"
+        image: "images/heart-tincture.jpg",
+        weight: "150",
+        dimensions: "4x4x12"
     },
     {
-        id: 4,
+        id: "sacred-cedar-salve",
         name: "Sacred Cedar Salve",
         category: "salves",
-        price: "$22.00",
+        price: 22.00,
         description: "Protective salve with cedar, pine, and sage for grounding and purification.",
-        image: "images/cedar-salve.jpg"
+        image: "images/cedar-salve.jpg",
+        weight: "100",
+        dimensions: "6x6x3"
     },
     {
-        id: 5,
+        id: "intuition-enhancement-elixir",
         name: "Intuition Enhancement Elixir",
         category: "elixirs",
-        price: "$35.00",
+        price: 35.00,
         description: "Mugwort and violet leaf blend to enhance psychic abilities and inner knowing.",
-        image: "images/intuition-elixir.jpg"
+        image: "images/intuition-elixir.jpg",
+        weight: "120",
+        dimensions: "5x5x10"
     },
     {
-        id: 6,
+        id: "digestive-harmony-tea",
         name: "Digestive Harmony Tea",
         category: "teas",
-        price: "$16.00",
+        price: 16.00,
         description: "Gentle blend of peppermint, fennel, and ginger for digestive wellness.",
-        image: "images/digestive-tea.jpg"
+        image: "images/digestive-tea.jpg",
+        weight: "85",
+        dimensions: "8x8x6"
     },
     {
-        id: 7,
+        id: "immune-shield-remedy",
         name: "Immune Shield Remedy",
         category: "remedies",
-        price: "$29.00",
+        price: 29.00,
         description: "Elderberry, echinacea, and astragalus blend for immune system support.",
-        image: "images/immune-remedy.jpg"
+        image: "images/immune-remedy.jpg",
+        weight: "150",
+        dimensions: "4x4x12"
     },
     {
-        id: 8,
+        id: "healing-skin-salve",
         name: "Healing Skin Salve",
         category: "salves",
-        price: "$24.00",
+        price: 24.00,
         description: "Calendula and plantain salve for cuts, scrapes, and skin irritations.",
-        image: "images/healing-salve.jpg"
+        image: "images/healing-salve.jpg",
+        weight: "100",
+        dimensions: "6x6x3"
     }
 ];
 
@@ -274,66 +290,269 @@ function renderSacredCreations() {
 }
 
 // Stripe Configuration
-const stripe = Stripe('pk_test_your_stripe_publishable_key_here'); // Replace with your actual key
+// Replace this with your actual Stripe publishable key from your dashboard
+const STRIPE_PUBLIC_KEY = 'pk_test_51...'; // Get this from Stripe Dashboard > Developers > API keys
+let stripe = null;
 
-// Show Product Modal with Purchase Option
+// Initialize Stripe when the key is available
+function initializeStripe() {
+    if (STRIPE_PUBLIC_KEY && STRIPE_PUBLIC_KEY !== 'pk_test_51...') {
+        stripe = Stripe(STRIPE_PUBLIC_KEY);
+        console.log('Stripe initialized successfully');
+    } else {
+        console.log('Stripe key not configured yet');
+    }
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    initializeStripe();
+    // ...existing initialization code...
+});
+
+// Show Product Modal with Snipcart Integration
 function showProductModal(button) {
     const productCard = button.closest('.product-card');
     const productName = productCard.querySelector('h3').textContent;
-    const productPrice = productCard.querySelector('.text-gold').textContent;
     const productDescription = productCard.querySelector('.text-muted').textContent;
+    
+    // Find full product data
+    const product = apothecaryProducts.find(p => p.name === productName);
+    if (!product) return;
     
     // Create modal HTML
     const modal = document.createElement('div');
     modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
     modal.innerHTML = `
-        <div class="bg-cream rounded-xl p-8 max-w-md w-full mx-4 relative">
-            <button class="absolute top-4 right-4 text-charcoal hover:text-gold" onclick="this.closest('.fixed').remove()">
+        <div class="bg-cream rounded-xl p-8 max-w-lg w-full mx-4 relative max-h-screen overflow-y-auto">
+            <button class="absolute top-4 right-4 text-charcoal hover:text-gold z-10" onclick="this.closest('.fixed').remove()">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
             </button>
-            <h3 class="font-playfair text-2xl font-bold text-charcoal mb-4">${productName}</h3>
-            <p class="text-muted mb-4">${productDescription}</p>
-            <div class="mb-6">
-                <span class="text-2xl font-bold text-gold">${productPrice}</span>
+            
+            <!-- Product Image -->
+            <div class="aspect-square w-full mb-6 rounded-lg overflow-hidden">
+                <img src="${product.image}" 
+                     alt="${product.name}" 
+                     class="w-full h-full object-cover"
+                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjOUNBRjg4Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iI0Y1RjVEQyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPiR7product.name}</dGV4dD48L3N2Zz4='">
             </div>
+            
+            <h3 class="font-playfair text-2xl font-bold text-charcoal mb-4">${product.name}</h3>
+            <p class="text-muted mb-4 leading-relaxed">${product.description}</p>
+            
+            <!-- Price and Quantity -->
+            <div class="flex items-center justify-between mb-6">
+                <span class="text-3xl font-bold text-gold">$${product.price.toFixed(2)}</span>
+                <div class="flex items-center space-x-3">
+                    <label class="text-sm font-medium text-charcoal">Qty:</label>
+                    <select class="border border-sage/30 rounded px-3 py-1 text-charcoal" id="quantity-select-${product.id}">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Snipcart Add to Cart Button -->
             <div class="space-y-3">
-                <button onclick="purchaseProduct('${productName}', '${productPrice}')" class="w-full bg-sage text-cream hover:bg-gold transition-all duration-300 py-3 rounded-lg font-medium">
-                    Purchase with Stripe
+                <button class="snipcart-add-item w-full bg-sage text-cream hover:bg-gold transition-all duration-300 py-4 rounded-lg font-medium text-lg flex items-center justify-center"
+                        data-item-id="${product.id}"
+                        data-item-price="${product.price}"
+                        data-item-description="${product.description}"
+                        data-item-image="${product.image}"
+                        data-item-name="${product.name}"
+                        data-item-weight="${product.weight}"
+                        data-item-dimensions="${product.dimensions}"
+                        data-item-categories="${product.category}">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 1.5M7 13l1.5 1.5M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"></path>
+                    </svg>
+                    Add to Cart
                 </button>
-                <button onclick="contactForCustomOrder('${productName}')" class="w-full border-2 border-sage text-sage hover:bg-sage hover:text-cream transition-all duration-300 py-3 rounded-lg font-medium">
-                    Custom Order Inquiry
+                
+                <button onclick="contactForCustomOrder('${product.name}')" 
+                        class="w-full border-2 border-sage text-sage hover:bg-sage hover:text-cream transition-all duration-300 py-3 rounded-lg font-medium">
+                    Ask About Custom Blends
                 </button>
             </div>
-            <p class="text-xs text-muted mt-4 text-center">
-                Secure payment processing powered by Stripe
-            </p>
+            
+            <!-- Security Badge -->
+            <div class="mt-6 text-center">
+                <div class="flex items-center justify-center text-xs text-muted">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 0h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                    Secure checkout powered by Snipcart • SSL Encrypted
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Close modal when clicking outside
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
+}
+
+// Enhanced Product Selection System
+let selectedProducts = [];
+
+// Add to wishlist/inquiry function
+function addToInquiry(productName, price) {
+    const existingProduct = selectedProducts.find(p => p.name === productName);
+    
+    if (existingProduct) {
+        existingProduct.quantity += 1;
+    } else {
+        selectedProducts.push({
+            name: productName,
+            price: price,
+            quantity: 1
+        });
+    }
+    
+    updateInquiryBadge();
+    showNotification(`${productName} added to your inquiry list!`, 'success');
+}
+
+// Remove from inquiry
+function removeFromInquiry(productName) {
+    selectedProducts = selectedProducts.filter(p => p.name !== productName);
+    updateInquiryBadge();
+    updateInquiryModal();
+}
+
+// Update inquiry badge
+function updateInquiryBadge() {
+    let badge = document.getElementById('inquiry-badge');
+    if (!badge) {
+        // Create badge if it doesn't exist
+        badge = document.createElement('div');
+        badge.id = 'inquiry-badge';
+        badge.className = 'fixed bottom-6 right-6 bg-gold text-charcoal rounded-full w-16 h-16 flex items-center justify-center font-bold text-lg shadow-lg cursor-pointer hover:bg-sage hover:text-cream transition-all duration-300 z-50';
+        badge.onclick = showInquiryModal;
+        document.body.appendChild(badge);
+    }
+    
+    const totalItems = selectedProducts.reduce((sum, p) => sum + p.quantity, 0);
+    badge.textContent = totalItems;
+    badge.style.display = totalItems > 0 ? 'flex' : 'none';
+}
+
+// Show inquiry modal
+function showInquiryModal() {
+    if (selectedProducts.length === 0) {
+        showNotification('Your inquiry list is empty. Add some products first!', 'info');
+        return;
+    }
+    
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+    modal.innerHTML = `
+        <div class="bg-cream rounded-xl p-8 max-w-lg w-full mx-4 relative max-h-screen overflow-y-auto">
+            <button class="absolute top-4 right-4 text-charcoal hover:text-gold z-10" onclick="this.closest('.fixed').remove()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            
+            <h3 class="font-playfair text-2xl font-bold text-charcoal mb-6">Your Product Inquiry</h3>
+            
+            <div class="space-y-4 mb-6">
+                ${selectedProducts.map(product => `
+                    <div class="flex items-center justify-between bg-white/50 p-4 rounded-lg">
+                        <div class="flex-1">
+                            <h4 class="font-medium text-charcoal">${product.name}</h4>
+                            <p class="text-sm text-muted">${product.price} each</p>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-sm font-medium">Qty: ${product.quantity}</span>
+                            <button onclick="removeFromInquiry('${product.name}')" class="text-red-500 hover:text-red-700">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            
+            <div class="space-y-3">
+                <button onclick="sendInquiry()" class="w-full bg-sage text-cream hover:bg-gold transition-all duration-300 py-3 rounded-lg font-medium">
+                    Send Product Inquiry
+                </button>
+                <button onclick="this.closest('.fixed').remove()" class="w-full border-2 border-sage text-sage hover:bg-sage hover:text-cream transition-all duration-300 py-2 rounded-lg font-medium">
+                    Continue Shopping
+                </button>
+            </div>
         </div>
     `;
     
     document.body.appendChild(modal);
 }
 
-// Purchase Product Function
-function purchaseProduct(productName, price) {
-    // For now, redirect to contact form with product info
-    // Later, integrate with actual Stripe checkout
-    showNotification(`Stripe integration coming soon! Contact us about ${productName}`, 'info');
+// Send inquiry to contact form
+function sendInquiry() {
+    const inquiryList = selectedProducts.map(p => 
+        `${p.name} (${p.price}) - Quantity: ${p.quantity}`
+    ).join('\n');
     
-    // Scroll to contact form
+    const totalItems = selectedProducts.reduce((sum, p) => sum + p.quantity, 0);
+    
+    const messageField = document.getElementById('message');
+    if (messageField) {
+        messageField.value = `I'm interested in ordering multiple products from The Root & Resonance:
+
+${inquiryList}
+
+Total items: ${totalItems}
+
+Please provide information about:
+- Availability and lead time
+- Bulk pricing (if applicable)
+- Shipping costs and options
+- Payment methods accepted
+- Any custom blend options
+
+Thank you!`;
+    }
+    
+    // Close modal and scroll to contact
+    document.querySelector('.fixed').remove();
     document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    
+    showNotification('Contact form pre-filled with your product inquiry!', 'success');
+}
+
+// Update inquiry modal content
+function updateInquiryModal() {
+    const modal = document.querySelector('.fixed');
+    if (modal) {
+        modal.remove();
+        showInquiryModal();
+    }
 }
 
 // Contact for Custom Order
 function contactForCustomOrder(productName) {
     // Pre-fill contact form
-    const nameField = document.getElementById('name');
     const messageField = document.getElementById('message');
     
     if (messageField) {
         messageField.value = `I'm interested in ${productName}. Please provide more details about custom orders, ingredients, and availability.`;
     }
+    
+    // Close any open modal
+    const modal = document.querySelector('.fixed');
+    if (modal) modal.remove();
     
     // Scroll to contact form
     document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
@@ -537,9 +756,56 @@ function setupLazyLoading() {
     }
 }
 
+// Snipcart Integration and Utilities
+function initializeSnipcart() {
+    // Wait for Snipcart to be ready
+    document.addEventListener('snipcart.ready', function() {
+        console.log('Snipcart is ready!');
+        
+        // Update cart display when items are added/removed
+        Snipcart.subscribe('item.added', updateCartDisplay);
+        Snipcart.subscribe('item.removed', updateCartDisplay);
+        Snipcart.subscribe('item.quantity.changed', updateCartDisplay);
+        
+        updateCartDisplay(); // Initial update
+    });
+}
+
+// Update cart count display
+function updateCartDisplay() {
+    if (window.Snipcart) {
+        try {
+            const cartCount = Snipcart.api.items.count();
+            const cartBadge = document.querySelector('.cart-count');
+            if (cartBadge) {
+                cartBadge.textContent = cartCount;
+                cartBadge.style.display = cartCount > 0 ? 'inline-block' : 'none';
+            }
+        } catch (error) {
+            console.log('Snipcart not fully loaded yet');
+        }
+    }
+}
+
+// Add quantity to Snipcart button dynamically
+function addQuantityToSnipcartButton(button, quantitySelector) {
+    const quantity = document.querySelector(quantitySelector)?.value || 1;
+    button.setAttribute('data-item-quantity', quantity);
+    
+    // Trigger the add to cart
+    button.click();
+}
+
 // Export functions for testing or external use
 window.RootResonance = {
     filterProducts,
     showNotification,
-    searchProducts
+    searchProducts,
+    updateCartDisplay,
+    initializeSnipcart
 };
+
+// Initialize Snipcart when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    initializeSnipcart();
+});
