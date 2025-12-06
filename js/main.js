@@ -13,6 +13,16 @@ const apothecaryProducts = [
         dimensions: "5x5x10"
     },
     {
+        id: "quiet-ember",
+        name: "Quiet Ember - Sleep & Relaxation Elixir",
+        category: "elixirs",
+        price: 22.00,
+        description: "A gentle evening elixir crafted in deep reverence to Gaia's nighttime medicines and the ancestors who understood the sacred art of rest. Designed to guide you into peaceful slumber when the mind won't quiet and the body holds the day's tension. This soothing blend contains passionflower to calm racing thoughts, chamomile for gentle sedation, lemon balm to ease nervous energy, valerian root for deep relaxation, lavender to release stress, and a touch of honey for sweetness and grounding. A tender companion for those who seek the healing power of restorative sleep.",
+        image: "images/quiet-ember.jpg",
+        weight: "120",
+        dimensions: "5x5x10"
+    },
+    {
         id: "womack-snake-root",
         name: "Womack Snake Root Elixir - Ancestral Lineage Tonic",
         category: "elixirs",
