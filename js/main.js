@@ -81,6 +81,16 @@ const apothecaryProducts = [
         image: "images/healing-salve.jpg",
         weight: "100",
         dimensions: "6x6x3"
+    },
+    {
+        id: "quiet-ember",
+        name: "Quiet Ember",
+        category: "elixirs",
+        price: 32.00,
+        description: "Pain-relief elixir with lemon balm, white willow bark, mullein, cinnamon, and lavender for natural comfort and healing.",
+        image: "images/quiet-ember.jpg",
+        weight: "120",
+        dimensions: "5x5x10"
     }
 ];
 
