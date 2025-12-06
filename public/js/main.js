@@ -8,7 +8,7 @@ const apothecaryProducts = [
         category: "elixirs",
         price: 18.00,
         description: "A handcrafted herbal comfort elixir created in honor of Gaia's wisdom and the ancestors who carried plant knowledge before us. Designed to bring soothing relief when headaches, tension, or sinus pressure try to steal your clarity. This gentle formula contains willow bark (nature's original aspirin), peppermint to release tightness, lemon balm to calm overstimulated nerves, lavender for relaxation, rosemary to boost circulation, ginger to reduce inflammation, and clove as a natural analgesic. A grounding ally for sensitive systems and those seeking clear-headed peace.",
-        image: "images/quiet-ember.jpg",
+        image: "images/Quiet_Thorn.png",
         weight: "120",
         dimensions: "5x5x10"
     },
@@ -18,7 +18,7 @@ const apothecaryProducts = [
         category: "elixirs",
         price: 24.00,
         description: "A bold, lineage-rooted elixir crafted to honor Gaia's medicine and the Womack ancestors who prepared this tonic before us. Made with Fireball whiskey to echo the original family recipe, this warming blend brings strength, vitality, and resilience back into the bloodstream. Contains licorice root for lung and adrenal support, ginger for warming fire, cinnamon for circulation, and clove for antimicrobial and pain-relieving power. A medicine of remembrance, carrying the courage of the women who came before you.",
-        image: "images/internal-renewal.jpg",
+        image: "images/Womack_SnakeRoot.png",
         weight: "120",
         dimensions: "5x5x10"
     },
@@ -28,7 +28,7 @@ const apothecaryProducts = [
         category: "elixirs",
         price: 20.00,
         description: "A handcrafted elixir created with gratitude to Gaia and the ancestral healers who taught us how to transform the body from within. Designed to support digestion, reduce inflammation, ease bloating, and encourage gentle metabolic activation. Contains ginger to spark digestive fire, turmeric for systemic balance, lemon balm to soothe the nervous system, peppermint for bloating relief, cinnamon for metabolic harmony, and clove as a digestive and microbial ally. A daily companion for those stepping into transformation.",
-        image: "images/body-alchemist.jpg",
+        image: "images/Body_Alchemist.png",
         weight: "120",
         dimensions: "5x5x10"
     },
@@ -38,7 +38,7 @@ const apothecaryProducts = [
         category: "elixirs",
         price: 20.00,
         description: "A gentle renewal tonic crafted in reverence to Gaia's cleansing plants and the ancestral stewards who understood the rhythms of the body. Designed to support liver health, lymphatic flow, and natural detox pathways. Helps reduce stagnation, release heaviness, and refresh the body from within. Contains lemon balm for calming, ginger for warmth, dandelion for liver support, and calendula for lymphatic movement. Ideal for seasonal reset, energetic recalibration, or times of heaviness.",
-        image: "images/womack-snake-root.jpg",
+        image: "images/Internal_Renewal.png",
         weight: "120",
         dimensions: "5x5x10"
     },
@@ -48,7 +48,7 @@ const apothecaryProducts = [
         category: "salves",
         price: 14.00,
         description: "A deeply soothing salve handcrafted in honor of Gaia's desert medicines and the ancestors who understood the healing power of wild plants. This formula begins with a slow, sun-infused rabbitbrush olive oil — traditionally used for inflammation, muscle soreness, and joint discomfort. The warm infusion is blended with beeswax and enhanced with lavender, rosemary, and peppermint to create a rich, penetrating balm that brings comfort exactly where the body holds tension. Carries the grounded strength of the desert — warm, resilient, rooted medicine.",
-        image: "images/desert-pain-salve.jpg",
+        image: "images/Desert_Balm.png",
         weight: "100",
         dimensions: "6x6x4"
     }
