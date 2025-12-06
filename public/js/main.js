@@ -83,11 +83,21 @@ const apothecaryProducts = [
         dimensions: "6x6x3"
     },
     {
-        id: "quiet-ember",
-        name: "Quiet Ember",
+        id: "quiet-ember-glycerite",
+        name: "Quiet Ember - Glycerite (Gentle Strength)",
         category: "elixirs",
-        price: 32.00,
-        description: "Pain-relief elixir with lemon balm, white willow bark, mullein, cinnamon, and lavender for natural comfort and healing.",
+        price: 18.00,
+        description: "A handcrafted herbal comfort elixir designed to bring soothing relief when cramps, tension, or inflammation try to steal your peace. This alcohol-free, gentle formula contains willow bark (nature's original aspirin), peppermint for tension relief, lemon balm to calm the nervous system, lavender for relaxation, rosemary for circulation, ginger for warming anti-inflammatory action, and clove as a natural analgesic. Perfect for teens, sensitive systems, and daytime use. Crafted with frequencies of release, softening, and warm inner resilience.",
+        image: "images/quiet-ember.jpg",
+        weight: "120",
+        dimensions: "5x5x10"
+    },
+    {
+        id: "quiet-ember-tincture",
+        name: "Quiet Ember - Tincture (Full Strength)",
+        category: "elixirs",
+        price: 22.00,
+        description: "The full-strength alcohol-based version of our beloved comfort elixir. This potent formula offers deeper, faster relief for strong cramps and intense discomfort. Contains the same powerful herbal allies - willow bark, peppermint, lemon balm, lavender, rosemary, ginger, and clove - but in a concentrated alcohol base for maximum effectiveness. Ideal for adults experiencing heavier cycle pain or chronic tension. The medicine of easing, so your body can exhale.",
         image: "images/quiet-ember.jpg",
         weight: "120",
         dimensions: "5x5x10"
@@ -350,7 +360,29 @@ function showProductModal(button) {
             </div>
             
             <h3 class="font-playfair text-2xl font-bold text-charcoal mb-4">${product.name}</h3>
-            <p class="text-muted mb-4 leading-relaxed">${product.description}</p>
+            <div class="text-muted mb-4 leading-relaxed text-sm">
+                ${product.description.length > 200 ? 
+                    `<div class="space-y-3">
+                        <p>${product.description.substring(0, 200)}...</p>
+                        <button onclick="this.style.display='none'; this.nextElementSibling.style.display='block';" class="text-sage hover:text-gold text-xs font-medium">Read More</button>
+                        <div style="display:none;">
+                            <p>${product.description}</p>
+                        </div>
+                    </div>` : 
+                    `<p>${product.description}</p>`
+                }
+                
+                ${product.id.includes('quiet-ember') ? `
+                    <div class="mt-4 p-3 bg-sage/10 rounded-lg">
+                        <h4 class="font-semibold text-charcoal mb-2">How to Use:</h4>
+                        <ul class="text-xs space-y-1">
+                            <li>• Shake gently before use</li>
+                            <li>• Take 1–2 dropperfuls under tongue or in water</li>
+                            <li>• Repeat every 4 hours as needed</li>
+                        </ul>
+                    </div>
+                ` : ''}
+            </div>
             
             <!-- Price and Quantity -->
             <div class="flex items-center justify-between mb-6">
