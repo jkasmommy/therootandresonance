@@ -3,104 +3,54 @@
 // Product Data for Snipcart
 const apothecaryProducts = [
     {
-        id: "moonlight-elixir",
-        name: "Moonlight Elixir",
+        id: "quiet-thorn",
+        name: "Quiet Thorn - Headache & Tension Relief Elixir",
         category: "elixirs",
-        price: 28.00,
-        description: "A calming blend of chamomile, lavender, and moonstone essence for peaceful sleep.",
-        image: "images/moonlight-elixir.jpg",
-        weight: "120", // in grams for shipping
-        dimensions: "5x5x10" // length x width x height in cm
-    },
-    {
-        id: "sunrise-vitality-tea",
-        name: "Sunrise Vitality Tea",
-        category: "teas", 
         price: 18.00,
-        description: "Energizing morning blend with ginseng, yerba mate, and citrus herbs.",
-        image: "images/sunrise-tea.jpg",
-        weight: "85",
-        dimensions: "8x8x6"
-    },
-    {
-        id: "heart-healing-tincture",
-        name: "Heart Healing Tincture",
-        category: "remedies",
-        price: 32.00,
-        description: "Hawthorn berry and rose hip tincture for emotional and physical heart support.",
-        image: "images/heart-tincture.jpg",
-        weight: "150",
-        dimensions: "4x4x12"
-    },
-    {
-        id: "sacred-cedar-salve",
-        name: "Sacred Cedar Salve",
-        category: "salves",
-        price: 22.00,
-        description: "Protective salve with cedar, pine, and sage for grounding and purification.",
-        image: "images/cedar-salve.jpg",
-        weight: "100",
-        dimensions: "6x6x3"
-    },
-    {
-        id: "intuition-enhancement-elixir",
-        name: "Intuition Enhancement Elixir",
-        category: "elixirs",
-        price: 35.00,
-        description: "Mugwort and violet leaf blend to enhance psychic abilities and inner knowing.",
-        image: "images/intuition-elixir.jpg",
+        description: "A handcrafted herbal comfort elixir created in honor of Gaia's wisdom and the ancestors who carried plant knowledge before us. Designed to bring soothing relief when headaches, tension, or sinus pressure try to steal your clarity. This gentle formula contains willow bark (nature's original aspirin), peppermint to release tightness, lemon balm to calm overstimulated nerves, lavender for relaxation, rosemary to boost circulation, ginger to reduce inflammation, and clove as a natural analgesic. A grounding ally for sensitive systems and those seeking clear-headed peace.",
+        image: "images/quiet-ember.jpg",
         weight: "120",
         dimensions: "5x5x10"
     },
     {
-        id: "digestive-harmony-tea",
-        name: "Digestive Harmony Tea",
-        category: "teas",
-        price: 16.00,
-        description: "Gentle blend of peppermint, fennel, and ginger for digestive wellness.",
-        image: "images/digestive-tea.jpg",
-        weight: "85",
-        dimensions: "8x8x6"
-    },
-    {
-        id: "immune-shield-remedy",
-        name: "Immune Shield Remedy",
-        category: "remedies",
-        price: 29.00,
-        description: "Elderberry, echinacea, and astragalus blend for immune system support.",
-        image: "images/immune-remedy.jpg",
-        weight: "150",
-        dimensions: "4x4x12"
-    },
-    {
-        id: "healing-skin-salve",
-        name: "Healing Skin Salve",
-        category: "salves",
+        id: "womack-snake-root",
+        name: "Womack Snake Root Elixir - Ancestral Lineage Tonic",
+        category: "elixirs",
         price: 24.00,
-        description: "Calendula and plantain salve for cuts, scrapes, and skin irritations.",
-        image: "images/healing-salve.jpg",
+        description: "A bold, lineage-rooted elixir crafted to honor Gaia's medicine and the Womack ancestors who prepared this tonic before us. Made with Fireball whiskey to echo the original family recipe, this warming blend brings strength, vitality, and resilience back into the bloodstream. Contains licorice root for lung and adrenal support, ginger for warming fire, cinnamon for circulation, and clove for antimicrobial and pain-relieving power. A medicine of remembrance, carrying the courage of the women who came before you.",
+        image: "images/internal-renewal.jpg",
+        weight: "120",
+        dimensions: "5x5x10"
+    },
+    {
+        id: "body-alchemist",
+        name: "Body Alchemist Elixir - Metabolic & Inflammation Support",
+        category: "elixirs",
+        price: 20.00,
+        description: "A handcrafted elixir created with gratitude to Gaia and the ancestral healers who taught us how to transform the body from within. Designed to support digestion, reduce inflammation, ease bloating, and encourage gentle metabolic activation. Contains ginger to spark digestive fire, turmeric for systemic balance, lemon balm to soothe the nervous system, peppermint for bloating relief, cinnamon for metabolic harmony, and clove as a digestive and microbial ally. A daily companion for those stepping into transformation.",
+        image: "images/body-alchemist.jpg",
+        weight: "120",
+        dimensions: "5x5x10"
+    },
+    {
+        id: "internal-renewal",
+        name: "Internal Renewal Elixir - Detox & Lymphatic Flow Support",
+        category: "elixirs",
+        price: 20.00,
+        description: "A gentle renewal tonic crafted in reverence to Gaia's cleansing plants and the ancestral stewards who understood the rhythms of the body. Designed to support liver health, lymphatic flow, and natural detox pathways. Helps reduce stagnation, release heaviness, and refresh the body from within. Contains lemon balm for calming, ginger for warmth, dandelion for liver support, and calendula for lymphatic movement. Ideal for seasonal reset, energetic recalibration, or times of heaviness.",
+        image: "images/womack-snake-root.jpg",
+        weight: "120",
+        dimensions: "5x5x10"
+    },
+    {
+        id: "desert-pain-salve",
+        name: "Desert Pain Salve - Rabbitbrush Relief Cream",
+        category: "salves",
+        price: 14.00,
+        description: "A deeply soothing salve handcrafted in honor of Gaia's desert medicines and the ancestors who understood the healing power of wild plants. This formula begins with a slow, sun-infused rabbitbrush olive oil — traditionally used for inflammation, muscle soreness, and joint discomfort. The warm infusion is blended with beeswax and enhanced with lavender, rosemary, and peppermint to create a rich, penetrating balm that brings comfort exactly where the body holds tension. Carries the grounded strength of the desert — warm, resilient, rooted medicine.",
+        image: "images/desert-pain-salve.jpg",
         weight: "100",
-        dimensions: "6x6x3"
-    },
-    {
-        id: "quiet-ember-glycerite",
-        name: "Quiet Ember - Glycerite (Gentle Strength)",
-        category: "elixirs",
-        price: 18.00,
-        description: "A handcrafted herbal comfort elixir designed to bring soothing relief when cramps, tension, or inflammation try to steal your peace. This alcohol-free, gentle formula contains willow bark (nature's original aspirin), peppermint for tension relief, lemon balm to calm the nervous system, lavender for relaxation, rosemary for circulation, ginger for warming anti-inflammatory action, and clove as a natural analgesic. Perfect for teens, sensitive systems, and daytime use. Crafted with frequencies of release, softening, and warm inner resilience.",
-        image: "images/quiet-ember.jpg",
-        weight: "120",
-        dimensions: "5x5x10"
-    },
-    {
-        id: "quiet-ember-tincture",
-        name: "Quiet Ember - Tincture (Full Strength)",
-        category: "elixirs",
-        price: 22.00,
-        description: "The full-strength alcohol-based version of our beloved comfort elixir. This potent formula offers deeper, faster relief for strong cramps and intense discomfort. Contains the same powerful herbal allies - willow bark, peppermint, lemon balm, lavender, rosemary, ginger, and clove - but in a concentrated alcohol base for maximum effectiveness. Ideal for adults experiencing heavier cycle pain or chronic tension. The medicine of easing, so your body can exhale.",
-        image: "images/quiet-ember.jpg",
-        weight: "120",
-        dimensions: "5x5x10"
+        dimensions: "6x6x4"
     }
 ];
 
@@ -372,13 +322,49 @@ function showProductModal(button) {
                     `<p>${product.description}</p>`
                 }
                 
-                ${product.id.includes('quiet-ember') ? `
+                ${(product.id === 'quiet-thorn') ? `
                     <div class="mt-4 p-3 bg-sage/10 rounded-lg">
                         <h4 class="font-semibold text-charcoal mb-2">How to Use:</h4>
                         <ul class="text-xs space-y-1">
                             <li>• Shake gently before use</li>
                             <li>• Take 1–2 dropperfuls under tongue or in water</li>
                             <li>• Repeat every 4 hours as needed</li>
+                        </ul>
+                    </div>
+                ` : product.id === 'womack-snake-root' ? `
+                    <div class="mt-4 p-3 bg-sage/10 rounded-lg">
+                        <h4 class="font-semibold text-charcoal mb-2">How to Use:</h4>
+                        <ul class="text-xs space-y-1">
+                            <li>• Shake before use</li>
+                            <li>• Take 1 dropperful directly or in a small amount of water</li>
+                            <li>• Use during immune stress, fatigue, or cold exposure</li>
+                        </ul>
+                    </div>
+                ` : product.id === 'body-alchemist' ? `
+                    <div class="mt-4 p-3 bg-sage/10 rounded-lg">
+                        <h4 class="font-semibold text-charcoal mb-2">How to Use:</h4>
+                        <ul class="text-xs space-y-1">
+                            <li>• Shake gently</li>
+                            <li>• Take 1 dropperful before meals or as needed</li>
+                            <li>• Use consistently for best results</li>
+                        </ul>
+                    </div>
+                ` : product.id === 'internal-renewal' ? `
+                    <div class="mt-4 p-3 bg-sage/10 rounded-lg">
+                        <h4 class="font-semibold text-charcoal mb-2">How to Use:</h4>
+                        <ul class="text-xs space-y-1">
+                            <li>• Shake gently</li>
+                            <li>• Take 1 dropperful daily or as needed</li>
+                            <li>• Best used during intentional cleansing periods</li>
+                        </ul>
+                    </div>
+                ` : product.id === 'desert-pain-salve' ? `
+                    <div class="mt-4 p-3 bg-sage/10 rounded-lg">
+                        <h4 class="font-semibold text-charcoal mb-2">How to Use:</h4>
+                        <ul class="text-xs space-y-1">
+                            <li>• Massage a small amount into areas of pain or tension</li>
+                            <li>• Reapply as needed</li>
+                            <li>• Use after warm showers, stretching, or activity</li>
                         </ul>
                     </div>
                 ` : ''}
