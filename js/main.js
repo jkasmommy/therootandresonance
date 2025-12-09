@@ -88,10 +88,10 @@ const sacredCreations = [
     },
     {
         id: 4,
-        name: "Sacred Geometry Keychains",
+        name: "Sacred Geometry Keychain",
         price: "$15.00",
-        description: "Portable sacred symbols for daily protection and mindfulness.",
-        image: "images/geometry-keychains.jpg"
+        description: "Carry a symbol of ancient protection and clarity wherever you go. This handcrafted wooden keychain features a precise laser-engraved Flower of Life (or Metatron's Cube, if you upload both versions), offering a small yet powerful reminder of harmony, balance, and mindful intention throughout your day. Lightweight, durable, and beautifully engraved, it's perfect for keys, bags, backpacks, or as a daily grounding talisman you keep close. Features laser-engraved sacred geometry symbol, smooth natural wood surface, high-quality metal key ring, lightweight and travel-friendly design, perfect for grounding and everyday mindfulness. Each keychain is individually crafted from natural wood, so grain patterns, shading, and engraving depth may vary slightly, making every piece truly one-of-a-kind.",
+        image: "images/Key_Chain.png"
     },
     {
         id: 5,
