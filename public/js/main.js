@@ -70,7 +70,7 @@ const sacredCreations = [
         name: "Flower of Life Coaster Set",
         price: "$45.00",
         description: "A laser-engraved wooden coaster set inspired by the sacred geometry of the Flower of Life. This meaningful set includes four coasters, each featuring clean, dark engraving that honors the infinite interconnectedness of all creation. Perfect for bringing intentional beauty to your daily rituals of nourishment and pause. Due to the natural beauty of wood and the handmade engraving process, each piece may display slight variations in grain pattern and tone, making every set truly one of a kind.",
-        image: "images/Flower_Of_Life_Coasters.jpg"
+        image: "images/Flower_Of_Life_Coasters.png"
     },
     {
         id: 2,
