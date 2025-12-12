@@ -252,6 +252,15 @@ function renderSacredCreations() {
                 </div>
             </div>
         `).join('');
+        
+        // Add click event to view details buttons
+        const detailButtons = sacredGrid.querySelectorAll('button');
+        detailButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSacredCreationModal(button);
+            });
+        });
     }
 }
 
@@ -275,6 +284,86 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeStripe();
     // ...existing initialization code...
 });
+
+// Show Sacred Creation Modal
+function showSacredCreationModal(button) {
+    const productCard = button.closest('.product-card');
+    const productName = productCard.querySelector('h3').textContent;
+    const productDesc = productCard.querySelector('p').textContent;
+    const productPrice = productCard.querySelector('.text-gold').textContent;
+    const productImg = productCard.querySelector('img').src;
+    
+    // Find the full product data
+    const product = sacredCreations.find(item => item.name === productName);
+    if (!product) return;
+    
+    // Parse price for Snipcart (remove $ and convert to number)
+    const numericPrice = parseFloat(productPrice.replace('$', ''));
+    
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <button class="modal-close" onclick="this.parentElement.parentElement.remove()">
+                <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img src="${productImg}" alt="${productName}" />
+                </div>
+                <div class="modal-info">
+                    <h2 class="modal-title">${productName}</h2>
+                    <div class="modal-description">
+                        <p class="short-desc">${productDesc}</p>
+                        ${product.longDescription ? `
+                            <div class="long-desc" style="display: none;">
+                                <p>${product.longDescription}</p>
+                            </div>
+                            <button class="read-more-btn" onclick="toggleDescription(this)">Read More</button>
+                        ` : ''}
+                    </div>
+                    <div class="modal-price">
+                        <span class="price">${productPrice}</span>
+                    </div>
+                    <div class="modal-actions">
+                        <div class="quantity-selector">
+                            <button onclick="changeQuantity(-1)" class="qty-btn">-</button>
+                            <input type="number" value="1" min="1" class="qty-input" />
+                            <button onclick="changeQuantity(1)" class="qty-btn">+</button>
+                        </div>
+                        <button class="snipcart-add-item add-to-cart-btn"
+                                data-item-id="${product.id}"
+                                data-item-price="${numericPrice}"
+                                data-item-name="${productName}"
+                                data-item-description="${productDesc}"
+                                data-item-image="${productImg}"
+                                data-item-quantity="1">
+                            Add to Cart
+                        </button>
+                    </div>
+                    <div class="trust-indicators">
+                        <div class="trust-item">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span>Handcrafted Quality</span>
+                        </div>
+                        <div class="trust-item">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                            <span>Secure Checkout</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+}
 
 // Show Product Modal with Snipcart Integration
 function showProductModal(button) {

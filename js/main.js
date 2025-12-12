@@ -252,6 +252,15 @@ function renderSacredCreations() {
                 </div>
             </div>
         `).join('');
+        
+        // Add click event to view details buttons
+        const detailButtons = sacredGrid.querySelectorAll('button');
+        detailButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSacredCreationModal(button);
+            });
+        });
     }
 }
 
@@ -401,6 +410,110 @@ function showProductModal(button) {
                 <button onclick="contactForCustomOrder('${product.name}')" 
                         class="w-full border-2 border-sage text-sage hover:bg-sage hover:text-cream transition-all duration-300 py-3 rounded-lg font-medium">
                     Ask About Custom Blends
+                </button>
+            </div>
+            
+            <!-- Security Badge -->
+            <div class="mt-6 text-center">
+                <div class="flex items-center justify-center text-xs text-muted">
+                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 0h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                    Secure checkout powered by Snipcart • SSL Encrypted
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Close modal when clicking outside
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    });
+}
+
+// Show Sacred Creation Modal with Snipcart Integration
+function showSacredCreationModal(button) {
+    const productCard = button.closest('.product-card');
+    const productName = productCard.querySelector('h3').textContent;
+    const productDescription = productCard.querySelector('.text-muted').textContent;
+    
+    // Find full product data
+    const product = sacredCreations.find(p => p.name === productName);
+    if (!product) return;
+    
+    // Convert price from "$XX.XX" format to number
+    const priceValue = parseFloat(product.price.replace('$', ''));
+    
+    // Create modal HTML
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+    modal.innerHTML = `
+        <div class="bg-cream rounded-xl p-8 max-w-lg w-full mx-4 relative max-h-screen overflow-y-auto">
+            <button class="absolute top-4 right-4 text-charcoal hover:text-gold z-10" onclick="this.closest('.fixed').remove()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            
+            <!-- Product Image -->
+            <div class="aspect-square w-full mb-6 rounded-lg overflow-hidden">
+                <img src="${product.image}" 
+                     alt="${product.name}" 
+                     class="w-full h-full object-cover"
+                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjRDRBRjM3Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzM2NDU0RiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPiR7product.name}</dGV4dD48L3N2Zz4='">
+            </div>
+            
+            <h3 class="font-playfair text-2xl font-bold text-charcoal mb-4">${product.name}</h3>
+            <div class="text-muted mb-4 leading-relaxed text-sm">
+                ${product.description.length > 200 ? 
+                    `<div class="space-y-3">
+                        <p>${product.description.substring(0, 200)}...</p>
+                        <button onclick="this.style.display='none'; this.nextElementSibling.style.display='block';" class="text-sage hover:text-gold text-xs font-medium">Read More</button>
+                        <div style="display:none;">
+                            <p>${product.description}</p>
+                        </div>
+                    </div>` : 
+                    `<p>${product.description}</p>`
+                }
+            </div>
+            
+            <!-- Price and Quantity -->
+            <div class="flex items-center justify-between mb-6">
+                <span class="text-3xl font-bold text-gold">$${priceValue.toFixed(2)}</span>
+                <div class="flex items-center space-x-3">
+                    <label class="text-sm font-medium text-charcoal">Qty:</label>
+                    <select class="border border-sage/30 rounded px-3 py-1 text-charcoal" id="quantity-select-${product.id}">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Snipcart Add to Cart Button -->
+            <div class="space-y-3">
+                <button class="snipcart-add-item w-full bg-sage text-cream hover:bg-gold transition-all duration-300 py-4 rounded-lg font-medium text-lg flex items-center justify-center"
+                        data-item-id="sacred-creation-${product.id}"
+                        data-item-price="${priceValue}"
+                        data-item-description="${product.description}"
+                        data-item-image="${product.image}"
+                        data-item-name="${product.name}"
+                        data-item-categories="sacred-creations">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 1.5M7 13l1.5 1.5M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"></path>
+                    </svg>
+                    Add to Cart
+                </button>
+                
+                <button onclick="contactForCustomOrder('${product.name}')" 
+                        class="w-full border-2 border-sage text-sage hover:bg-sage hover:text-cream transition-all duration-300 py-3 rounded-lg font-medium">
+                    Ask About Custom Orders
                 </button>
             </div>
             
