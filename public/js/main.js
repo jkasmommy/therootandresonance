@@ -70,7 +70,7 @@ const apothecaryProducts = [
         description: "A gently nourishing botanical cream handcrafted to support hormonal balance, emotional regulation, and the natural rhythms of the female body through all seasons of life. MoonRoot Harmony Cream is rooted in traditional herbal wisdom and crafted with intention to support PMS, perimenopause, menopause, and moments of internal imbalance.",
         longDescription: "This formula blends coconut oil and beeswax with aloe vera gel and rose–chamomile floral water to create a soft, soothing cream that absorbs easily into the skin. Wild yam root glycerite — long respected for its role in women's herbal traditions — is infused to support harmony and ease, while lavender essential oil offers gentle calming and nervous system support. The result is a balanced, comforting cream designed to nourish both body and spirit.",
         usage: "Apply a pea-sized amount to the lower abdomen, inner forearms, wrists, inner thighs, or back of the neck • Use 1–2 times daily or as needed • May be refrigerated for a cooling effect during hot flashes • If still cycling, often used 3 weeks on / 1 week off",
-        image: "images/MoonRoot_Harmony_Cream.png",
+        image: "images/Moonroot_Harmony.png",
         weight: "100",
         dimensions: "6x6x4"
     }
