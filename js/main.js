@@ -933,6 +933,33 @@ function addQuantityToSnipcartButton(button, quantitySelector) {
     button.click();
 }
 
+// Modal Helper Functions
+function toggleDescription(button) {
+    const longDesc = button.parentElement.querySelector('.long-desc');
+    if (longDesc.style.display === 'none' || longDesc.style.display === '') {
+        longDesc.style.display = 'block';
+        button.textContent = 'Read Less';
+    } else {
+        longDesc.style.display = 'none';
+        button.textContent = 'Read More';
+    }
+}
+
+function changeQuantity(change) {
+    const qtyInput = document.querySelector('.modal-overlay .qty-input');
+    if (qtyInput) {
+        const currentValue = parseInt(qtyInput.value) || 1;
+        const newValue = Math.max(1, currentValue + change);
+        qtyInput.value = newValue;
+        
+        // Update the Snipcart data attribute
+        const addToCartBtn = document.querySelector('.modal-overlay .snipcart-add-item');
+        if (addToCartBtn) {
+            addToCartBtn.setAttribute('data-item-quantity', newValue);
+        }
+    }
+}
+
 // Export functions for testing or external use
 window.RootResonance = {
     filterProducts,
