@@ -74,34 +74,20 @@ const sacredCreations = [
     },
     {
         id: 2,
-        name: "Metatron's Cube Wall Art",
-        price: "$78.00",
-        description: "Intricate sacred geometry wall piece crafted from reclaimed wood.",
-        image: "images/metatron-art.jpg"
+        name: "Tree of Life Meditation Board",
+        price: "$38.00",
+        description: "A laser-cut wooden meditation board inspired by the timeless symbolism of the Tree of Life — a sacred emblem of grounding, growth, and the interconnected nature of all beings. Carefully crafted from natural wood, this circular board features an intricate Tree of Life design, making it a powerful focal piece for meditation, breathwork, altar spaces, or moments of quiet contemplation. Designed to support intentional pauses and mindful presence, this meditation board invites you to center your awareness, connect with the earth, and return to balance. Each piece is thoughtfully made using a laser-cut process that highlights the organic beauty of the wood while maintaining clean, precise lines. Due to the natural characteristics of wood and the handmade nature of the cutting and finishing process, each meditation board will display subtle variations in grain, tone, and texture — ensuring that every piece is truly one of a kind.",
+        image: "images/Tree_of_Life_jpg.png"
     },
     {
         id: 3,
-        name: "Crystal Grid Template",
-        price: "$32.00",
-        description: "Precision-cut crystal grid template for meditation and energy work.",
-        image: "images/crystal-grid.jpg"
-    },
-    {
-        id: 4,
         name: "Sacred Geometry Keychain",
         price: "$15.00",
         description: "Carry a symbol of ancient protection and clarity wherever you go. This handcrafted wooden keychain features a precise laser-engraved Flower of Life (or Metatron's Cube, if you upload both versions), offering a small yet powerful reminder of harmony, balance, and mindful intention throughout your day. Lightweight, durable, and beautifully engraved, it's perfect for keys, bags, backpacks, or as a daily grounding talisman you keep close. Features laser-engraved sacred geometry symbol, smooth natural wood surface, high-quality metal key ring, lightweight and travel-friendly design, perfect for grounding and everyday mindfulness. Each keychain is individually crafted from natural wood, so grain patterns, shading, and engraving depth may vary slightly, making every piece truly one-of-a-kind.",
         image: "images/Key_Chain.png"
     },
     {
-        id: 5,
-        name: "Altar Pentacle Plate",
-        price: "$55.00",
-        description: "Hand-carved wooden pentacle for ritual and ceremonial use.",
-        image: "images/pentacle-plate.jpg"
-    },
-    {
-        id: 6,
+        id: 4,
         name: "Mandala Meditation Board",
         price: "$65.00",
         description: "Intricate mandala design for focused meditation and contemplation.",
