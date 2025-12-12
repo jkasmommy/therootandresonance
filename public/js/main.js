@@ -61,6 +61,18 @@ const apothecaryProducts = [
         image: "images/Desert_Balm.png",
         weight: "100",
         dimensions: "6x6x4"
+    },
+    {
+        id: "moonroot-harmony",
+        name: "MoonRoot Harmony Cream",
+        category: "salves",
+        price: 15.00,
+        description: "A gently nourishing botanical cream handcrafted to support hormonal balance, emotional regulation, and the natural rhythms of the female body through all seasons of life. MoonRoot Harmony Cream is rooted in traditional herbal wisdom and crafted with intention to support PMS, perimenopause, menopause, and moments of internal imbalance.",
+        longDescription: "This formula blends coconut oil and beeswax with aloe vera gel and rose–chamomile floral water to create a soft, soothing cream that absorbs easily into the skin. Wild yam root glycerite — long respected for its role in women's herbal traditions — is infused to support harmony and ease, while lavender essential oil offers gentle calming and nervous system support. The result is a balanced, comforting cream designed to nourish both body and spirit.",
+        usage: "Apply a pea-sized amount to the lower abdomen, inner forearms, wrists, inner thighs, or back of the neck • Use 1–2 times daily or as needed • May be refrigerated for a cooling effect during hot flashes • If still cycling, often used 3 weeks on / 1 week off",
+        image: "images/MoonRoot_Harmony_Cream.png",
+        weight: "100",
+        dimensions: "6x6x4"
     }
 ];
 
@@ -450,6 +462,16 @@ function showProductModal(button) {
                             <li>• Massage a small amount into areas of pain or tension</li>
                             <li>• Reapply as needed</li>
                             <li>• Use after warm showers, stretching, or activity</li>
+                        </ul>
+                    </div>
+                ` : product.id === 'moonroot-harmony' ? `
+                    <div class="mt-4 p-3 bg-sage/10 rounded-lg">
+                        <h4 class="font-semibold text-charcoal mb-2">How to Use:</h4>
+                        <ul class="text-xs space-y-1">
+                            <li>• Apply a pea-sized amount to the lower abdomen, inner forearms, wrists, inner thighs, or back of the neck</li>
+                            <li>• Use 1–2 times daily or as needed</li>
+                            <li>• May be refrigerated for a cooling effect during hot flashes</li>
+                            <li>• If still cycling, often used 3 weeks on / 1 week off</li>
                         </ul>
                     </div>
                 ` : ''}
