@@ -1,0 +1,106 @@
+{
+  "products": {
+    "quiet-thorn": {
+      "id": "quiet-thorn",
+      "name": "Quiet Thorn - Headache & Tension Relief Elixir",
+      "price": 18.00,
+      "description": "A handcrafted herbal comfort elixir created in honor of Gaia's wisdom and the ancestors who carried plant knowledge before us.",
+      "category": "elixirs",
+      "weight": "120",
+      "dimensions": "5x5x10",
+      "image": "images/Quiet_Thorn.png"
+    },
+    "quiet-ember": {
+      "id": "quiet-ember", 
+      "name": "Quiet Ember - Sleep & Relaxation Elixir",
+      "price": 22.00,
+      "description": "A gentle evening elixir crafted in deep reverence to Gaia's nighttime medicines and the ancestors who understood the sacred art of rest.",
+      "category": "elixirs",
+      "weight": "120", 
+      "dimensions": "5x5x10",
+      "image": "images/quiet-ember.jpg"
+    },
+    "womack-snake-root": {
+      "id": "womack-snake-root",
+      "name": "Womack Snake Root Elixir - Ancestral Lineage Tonic", 
+      "price": 24.00,
+      "description": "A bold, lineage-rooted elixir crafted to honor Gaia's medicine and the Womack ancestors who prepared this tonic before us.",
+      "category": "elixirs",
+      "weight": "120",
+      "dimensions": "5x5x10", 
+      "image": "images/Womack_SnakeRoot.png"
+    },
+    "body-alchemist": {
+      "id": "body-alchemist",
+      "name": "Body Alchemist Elixir - Metabolic & Inflammation Support",
+      "price": 20.00,
+      "description": "A handcrafted elixir created with gratitude to Gaia and the ancestral healers who taught us how to transform the body from within.",
+      "category": "elixirs",
+      "weight": "120",
+      "dimensions": "5x5x10",
+      "image": "images/Body_Alchemist.png"
+    },
+    "internal-renewal": {
+      "id": "internal-renewal",
+      "name": "Internal Renewal Elixir - Detox & Lymphatic Flow Support",
+      "price": 20.00,
+      "description": "A gentle renewal tonic crafted in reverence to Gaia's cleansing plants and the ancestral stewards who understood the rhythms of the body.",
+      "category": "elixirs",
+      "weight": "120",
+      "dimensions": "5x5x10",
+      "image": "images/Internal_Renewal.png"
+    },
+    "desert-pain-salve": {
+      "id": "desert-pain-salve",
+      "name": "Desert Pain Salve - Rabbitbrush Relief Cream",
+      "price": 14.00,
+      "description": "A deeply soothing salve handcrafted in honor of Gaia's desert medicines and the ancestors who understood the healing power of wild plants.",
+      "category": "salves",
+      "weight": "100",
+      "dimensions": "6x6x4",
+      "image": "images/Desert_Balm.png"
+    },
+    "moonroot-harmony": {
+      "id": "moonroot-harmony",
+      "name": "MoonRoot Harmony Cream",
+      "price": 15.00,
+      "description": "A gently nourishing botanical cream handcrafted to support hormonal balance, emotional regulation, and the natural rhythms of the female body through all seasons of life.",
+      "category": "salves",
+      "weight": "100",
+      "dimensions": "6x6x4",
+      "image": "images/Moonroot_Harmony.png"
+    },
+    "sacred-creation-1": {
+      "id": "sacred-creation-1",
+      "name": "Flower of Life Coaster Set",
+      "price": 25.00,
+      "description": "A laser-engraved wooden coaster set inspired by the sacred geometry of the Flower of Life.",
+      "category": "sacred-creations",
+      "image": "images/Flower_Of_Life_Coasters.png"
+    },
+    "sacred-creation-2": {
+      "id": "sacred-creation-2",
+      "name": "Tree of Life Meditation Board",
+      "price": 38.00,
+      "description": "A laser-cut wooden meditation board inspired by the timeless symbolism of the Tree of Life.",
+      "category": "sacred-creations",
+      "image": "images/Tree_of_Life_jpg.png"
+    },
+    "sacred-creation-3": {
+      "id": "sacred-creation-3",
+      "name": "Sacred Geometry Keychain",
+      "price": 15.00,
+      "description": "Carry a symbol of ancient protection and clarity wherever you go.",
+      "category": "sacred-creations",
+      "image": "images/Key_Chain.png"
+    },
+    "sacred-creation-4": {
+      "id": "sacred-creation-4",
+      "name": "Herb Stripper",
+      "price": 20.00,
+      "description": "A handcrafted wooden herb stripper designed to make the process of harvesting and preparing herbs simple, efficient, and intentional.",
+      "category": "sacred-creations",
+      "image": "images/Herb_Stripper.png"
+    }
+  }
+}
