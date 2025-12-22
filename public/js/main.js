@@ -423,6 +423,7 @@ function showProductModal(button) {
                         data-item-weight="${product.weight}"
                         data-item-dimensions="${product.dimensions}"
                         data-item-categories="${product.category}"
+                        data-item-url="${window.location.origin}/products/${product.id}.html">
                         data-item-url="https://tr-r-website.vercel.app/products.html"
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 1.5M7 13l1.5 1.5M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"></path>
@@ -528,7 +529,7 @@ function showSacredCreationModal(button) {
                         data-item-image="${product.image}"
                         data-item-name="${product.name}"
                         data-item-categories="sacred-creations"
-                        data-item-url="https://tr-r-website.vercel.app/products.html"
+                        data-item-url="${window.location.origin}/products/sacred-creation-${product.id}.html">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 1.5M7 13l1.5 1.5M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"></path>
                     </svg>
