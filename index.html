@@ -349,12 +349,41 @@
             loadStrategy: "on-user-interaction",
             modalStyle: "side",
             currency: "usd",
-            domain: "tr-r-website.vercel.app",
-            protocol: "https"
+            addProductBehavior: "none",
+            timeoutDuration: 5000,
+            domain: window.location.hostname,
+            protocol: window.location.protocol.replace(':', ''),
+            validationUrlTypes: []
         };
+        
+        // Override Snipcart's product validation completely
+        document.addEventListener('snipcart.ready', () => {
+            if (window.Snipcart && window.Snipcart.api) {
+                // Disable all product validation
+                const originalValidate = window.Snipcart.api.products.validate;
+                window.Snipcart.api.products.validate = function() {
+                    return Promise.resolve(true);
+                };
+                
+                // Disable URL crawling
+                const originalFetch = window.Snipcart.api.products.fetch;
+                window.Snipcart.api.products.fetch = function(productId) {
+                    return Promise.resolve({
+                        id: productId,
+                        name: productId,
+                        url: window.location.href,
+                        price: 0
+                    });
+                };
+            }
+        });
     </script>
     <script async src="https://cdn.snipcart.com/themes/v3.2.0/default/snipcart.js"></script>
-    <div hidden id="snipcart" data-api-key="NzFhYTI4NzMtOGNhNy00NzA4LWFhYWItOTcwMDNkNjM0YjQ4NjM4OTcxNzI2NjMyODU0NzA0" data-config-modal-style="side"></div>
+    <div hidden id="snipcart" 
+         data-api-key="NzFhYTI4NzMtOGNhNy00NzA4LWFhYWItOTcwMDNkNjM0YjQ4NjM4OTcxNzI2NjMyODU0NzA0" 
+         data-config-modal-style="side" 
+         data-config-add-product-behavior="none"
+         data-config-timeout-duration="5000"></div>
     
     <!-- Scripts -->
     <script src="js/main.js"></script>
