@@ -133,9 +133,27 @@ function initializeWebsite() {
     
     // Debug Snipcart initialization
     console.log('Website initialized. Checking Snipcart...');
+    
+    // Add event listener for cart button debugging
     setTimeout(() => {
+        const cartButton = document.querySelector('.snipcart-checkout');
+        if (cartButton) {
+            console.log('Cart button found:', cartButton);
+            cartButton.addEventListener('click', function(e) {
+                console.log('Cart button clicked!', e);
+                console.log('Snipcart object:', window.Snipcart);
+                if (!window.Snipcart) {
+                    console.error('Snipcart not loaded!');
+                    e.preventDefault();
+                }
+            });
+        } else {
+            console.error('Cart button not found!');
+        }
+        
         if (window.Snipcart) {
             console.log('Snipcart is loaded and ready');
+            console.log('Snipcart API:', window.Snipcart);
         } else {
             console.log('Snipcart not yet loaded, waiting...');
             // Try again in a few seconds
@@ -449,7 +467,8 @@ function showProductModal(button) {
                         data-item-image="${product.image}"
                         data-item-weight="${product.weight}"
                         data-item-dimensions="${product.dimensions}"
-                        data-item-categories="${product.category}">
+                        data-item-categories="${product.category}"
+                        onclick="console.log('Add to cart clicked!', this); console.log('Snipcart:', window.Snipcart);">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 1.5M7 13l1.5 1.5M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"></path>
                     </svg>
@@ -554,7 +573,8 @@ function showSacredCreationModal(button) {
                         data-item-name="${product.name}"
                         data-item-description="${product.description}"
                         data-item-image="${product.image}"
-                        data-item-categories="sacred-creations">
+                        data-item-categories="sacred-creations"
+                        onclick="console.log('Sacred creation add to cart clicked!', this); console.log('Snipcart:', window.Snipcart);">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 1.5M7 13l1.5 1.5M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"></path>
                     </svg>
