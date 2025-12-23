@@ -80,30 +80,38 @@ const sacredCreations = [
     {
         id: 1,
         name: "Flower of Life Coaster Set",
-        price: "$25.00",
+        price: 25.00,
         description: "A laser-engraved wooden coaster set inspired by the sacred geometry of the Flower of Life. This meaningful set includes four coasters, each featuring clean, dark engraving that honors the infinite interconnectedness of all creation. Perfect for bringing intentional beauty to your daily rituals of nourishment and pause. Due to the natural beauty of wood and the handmade engraving process, each piece may display slight variations in grain pattern and tone, making every set truly one of a kind.",
-        image: "images/Flower_Of_Life_Coasters.png"
+        image: "images/Flower_Of_Life_Coasters.png",
+        weight: "150",
+        dimensions: "4x4x1"
     },
     {
         id: 2,
         name: "Tree of Life Meditation Board",
-        price: "$38.00",
+        price: 38.00,
         description: "A laser-cut wooden meditation board inspired by the timeless symbolism of the Tree of Life — a sacred emblem of grounding, growth, and the interconnected nature of all beings. Carefully crafted from natural wood, this circular board features an intricate Tree of Life design, making it a powerful focal piece for meditation, breathwork, altar spaces, or moments of quiet contemplation. Designed to support intentional pauses and mindful presence, this meditation board invites you to center your awareness, connect with the earth, and return to balance. Each piece is thoughtfully made using a laser-cut process that highlights the organic beauty of the wood while maintaining clean, precise lines. Due to the natural characteristics of wood and the handmade nature of the cutting and finishing process, each meditation board will display subtle variations in grain, tone, and texture — ensuring that every piece is truly one of a kind.",
-        image: "images/Tree_of_Life_jpg.png"
+        image: "images/Tree_of_Life_jpg.png",
+        weight: "200",
+        dimensions: "8x8x1"
     },
     {
         id: 3,
         name: "Sacred Geometry Keychain",
-        price: "$15.00",
+        price: 15.00,
         description: "Carry a symbol of ancient protection and clarity wherever you go. This handcrafted wooden keychain features a precise laser-engraved Flower of Life (or Metatron's Cube, if you upload both versions), offering a small yet powerful reminder of harmony, balance, and mindful intention throughout your day. Lightweight, durable, and beautifully engraved, it's perfect for keys, bags, backpacks, or as a daily grounding talisman you keep close. Features laser-engraved sacred geometry symbol, smooth natural wood surface, high-quality metal key ring, lightweight and travel-friendly design, perfect for grounding and everyday mindfulness. Each keychain is individually crafted from natural wood, so grain patterns, shading, and engraving depth may vary slightly, making every piece truly one-of-a-kind.",
-        image: "images/Key_Chain.png"
+        image: "images/Key_Chain.png",
+        weight: "20",
+        dimensions: "3x3x0.5"
     },
     {
         id: 4,
         name: "Herb Stripper",
-        price: "$20.00",
+        price: 20.00,
         description: "A handcrafted wooden herb stripper designed to make the process of harvesting and preparing herbs simple, efficient, and intentional. This crescent-shaped tool features multiple hole sizes for stripping leaves from a variety of herb stems, along with a comb-style edge for gently gathering and cleaning herbs with ease. Thoughtfully designed for herbalists, gardeners, and home apothecaries, this herb stripper supports mindful preparation and connection to plant medicine. Each piece is laser-cut from natural wood and finished by hand, creating a functional tool that is both practical and beautiful. Due to the natural characteristics of wood and the handmade cutting and finishing process, each herb stripper may display slight variations in grain, tone, and engraving, making every piece truly one of a kind.",
-        image: "images/Herb_Stripper.png"
+        image: "images/Herb_Stripper.png",
+        weight: "50",
+        dimensions: "6x4x0.5"
     }
 ];
 
@@ -122,6 +130,24 @@ function initializeWebsite() {
     renderApothecaryProducts();
     renderSacredCreations();
     setupIntersectionObserver();
+    
+    // Debug Snipcart initialization
+    console.log('Website initialized. Checking Snipcart...');
+    setTimeout(() => {
+        if (window.Snipcart) {
+            console.log('Snipcart is loaded and ready');
+        } else {
+            console.log('Snipcart not yet loaded, waiting...');
+            // Try again in a few seconds
+            setTimeout(() => {
+                if (window.Snipcart) {
+                    console.log('Snipcart loaded on retry');
+                } else {
+                    console.error('Snipcart failed to load');
+                }
+            }, 3000);
+        }
+    }, 2000);
 }
 
 // Mobile Menu Toggle
@@ -257,7 +283,7 @@ function renderSacredCreations() {
                 <h3 class="font-playfair text-xl font-semibold text-charcoal mb-2">${item.name}</h3>
                 <p class="text-muted text-sm mb-3 leading-relaxed">${item.description}</p>
                 <div class="flex justify-between items-center">
-                    <span class="font-semibold text-lg text-gold">${item.price}</span>
+                    <span class="font-semibold text-lg text-gold">$${item.price.toFixed(2)}</span>
                     <button class="px-4 py-2 bg-sage text-cream rounded-full hover:bg-gold transition-colors duration-300 text-sm font-medium">
                         View Details
                     </button>
@@ -468,8 +494,8 @@ function showSacredCreationModal(button) {
     const product = sacredCreations.find(p => p.name === productName);
     if (!product) return;
     
-    // Convert price from "$XX.XX" format to number
-    const priceValue = parseFloat(product.price.replace('$', ''));
+    // Price is now numeric, no need to parse
+    const priceValue = product.price;
     
     // Create modal HTML
     const modal = document.createElement('div');
