@@ -69,12 +69,12 @@
                     <a href="#about" class="nav-link text-charcoal hover:text-gold transition-colors duration-300">About</a>
                     <a href="#contact" class="nav-link text-charcoal hover:text-gold transition-colors duration-300">Contact</a>
                     
-                    <!-- Cart Button - Will be updated for Shopify -->
+                    <!-- Cart Button - Stripe Integration -->
                     <button id="cart-button" class="flex items-center text-charcoal hover:text-gold transition-colors duration-300 relative">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 1.5M7 13l1.5 1.5M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"></path>
                         </svg>
-                        <span id="cart-count" class="ml-1">0</span>
+                        <span class="cart-count absolute -top-2 -right-2 bg-gold text-cream text-xs rounded-full w-5 h-5 flex items-center justify-center" style="display: none;">0</span>
                     </button>
                 </div>
                 <button class="md:hidden text-charcoal hover:text-gold" id="mobile-menu-btn">
@@ -333,6 +333,35 @@
             </div>
         </div>
     </footer>
+    
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar fixed right-0 top-0 h-full w-96 bg-cream shadow-2xl transform translate-x-full transition-transform duration-300 z-50">
+        <div class="p-6 border-b border-muted-green">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl font-display text-charcoal">Your Cart</h2>
+                <button onclick="cart.toggle()" class="text-charcoal hover:text-gold text-2xl">&times;</button>
+            </div>
+        </div>
+        
+        <div class="flex-1 overflow-y-auto p-6">
+            <div class="cart-items">
+                <!-- Cart items will be dynamically inserted here -->
+            </div>
+        </div>
+        
+        <div class="border-t border-muted-green p-6">
+            <div class="flex justify-between items-center mb-4">
+                <span class="font-display text-lg text-charcoal">Total:</span>
+                <span class="cart-total font-bold text-xl text-gold">$0.00</span>
+            </div>
+            <button class="checkout-btn w-full bg-sage text-cream py-3 rounded-lg font-semibold hover:bg-opacity-80 transition-colors duration-300" disabled>
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
+    
+    <!-- Cart Overlay -->
+    <div class="cart-overlay fixed inset-0 bg-black bg-opacity-50 z-40 opacity-0 pointer-events-none transition-opacity duration-300"></div>
     
     <!-- Scripts -->
     <script src="js/main.js?v=20251226-003"></script>

@@ -24,7 +24,9 @@
     "url": "https://github.com/jkasmommy/TheRootandResonance"
   },
   "devDependencies": {},
-  "dependencies": {},
+  "dependencies": {
+    "stripe": "^14.10.0"
+  },
   "engines": {
     "node": ">=14.0.0"
   }
