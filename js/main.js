@@ -17,11 +17,15 @@ const SHOPIFY_PRODUCTS = {
 
 // DOM Content Loaded
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 The Root & Resonance website loading...');
+    console.log('🛍️ Shopify integration: REDIRECT MODE');
     initializeWebsite();
 });
 
 // Initialize Website Functions
 function initializeWebsite() {
+    console.log('⚙️ Initializing website functions...');
+    
     setupMobileMenu();
     setupSmoothScrolling();
     setupProductFiltering();
@@ -32,30 +36,39 @@ function initializeWebsite() {
     setupIntersectionObserver();
     setupCartButton();
     
-    console.log('Website initialized with Shopify redirect integration');
+    console.log('✅ Website initialized with Shopify redirect integration');
+    console.log('🛒 Cart button and Add to Cart buttons ready!');
 }
 
 // Setup Cart Button functionality
 function setupCartButton() {
+    console.log('🛒 Setting up cart button...');
     const cartButton = document.getElementById('cart-button');
+    
     if (cartButton) {
+        console.log('✅ Cart button found, adding click handler');
         cartButton.addEventListener('click', (e) => {
             e.preventDefault();
-            // Redirect to Shopify store
+            console.log('🛒 Cart button clicked! Opening Shopify store...');
+            showMessage('Opening our store...', 'info');
             window.open('https://the-root-and-resonance.myshopify.com', '_blank');
         });
+    } else {
+        console.error('❌ Cart button not found!');
     }
 }
 
 // Handle Add to Cart - redirect to Shopify product page
 function handleAddToCart(productId, productName) {
-    console.log('Opening product in Shopify:', productName);
+    console.log('🛍️ Add to Cart clicked:', productName, '(ID:', productId + ')');
     
     // Get Shopify handle
     const shopifyHandle = SHOPIFY_PRODUCTS[productId];
+    console.log('📋 Shopify handle:', shopifyHandle);
     
     if (shopifyHandle) {
         const shopifyUrl = `https://the-root-and-resonance.myshopify.com/products/${shopifyHandle}`;
+        console.log('🔗 Opening URL:', shopifyUrl);
         
         // Show feedback
         showMessage(`Opening ${productName} in our store...`, 'success');
@@ -63,6 +76,7 @@ function handleAddToCart(productId, productName) {
         // Open Shopify product page
         window.open(shopifyUrl, '_blank');
     } else {
+        console.warn('⚠️ No Shopify handle found for:', productId);
         // Fallback to main store
         showMessage(`Opening our store...`, 'info');
         window.open('https://the-root-and-resonance.myshopify.com', '_blank');

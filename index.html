@@ -340,7 +340,19 @@
     </footer>
     
     <!-- Scripts -->
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=20251226-002"></script>
+    
+    <!-- Force cache refresh -->
+    <script>
+        // Force reload if API key appears in DOM
+        document.addEventListener('DOMContentLoaded', function() {
+            const bodyText = document.body.textContent || document.body.innerText || '';
+            if (bodyText.includes('data-api-key') || bodyText.includes('MTZlZGQ5Y2EtODM5Ny00MGQ5LTk3Y2UtNmZmZGQwZWM5ZmExNjM4OTcxNzI2NjMyODU0NzA0')) {
+                console.log('Corrupted content detected, forcing reload...');
+                window.location.reload(true);
+            }
+        });
+    </script>
     
 </body>
 </html>
