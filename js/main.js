@@ -1,95 +1,95 @@
 // Main JavaScript for The Root & Resonance Website
 // Stripe Cart Integration - NO Shopify Dependencies
 
-// Product Data - AI-Generated Products for The Root & Resonance
+// Product Data - YOUR ACTUAL PRODUCTS
 const PRODUCTS = {
-    'healing-salve': {
-        id: 'healing-salve',
-        name: 'Healing Herbal Salve',
-        price: 24.99,
-        description: 'A powerful blend of calendula, comfrey, and arnica for natural healing and skin repair.',
-        image: 'images/products/healing-salve.jpg',
+    'quiet-thorn': {
+        id: 'quiet-thorn',
+        name: 'Quiet Thorn - Headache & Tension Relief Elixir',
+        price: 18.00,
+        description: 'A handcrafted herbal comfort elixir created in honor of Gaia\'s wisdom and the ancestors who carried plant knowledge before us. Designed to bring soothing relief when headaches, tension, or sinus pressure try to steal your clarity.',
+        image: 'images/Quiet_Thorn.png',
         category: 'apothecary'
     },
-    'sage-cleansing-spray': {
-        id: 'sage-cleansing-spray',
-        name: 'Sage Cleansing Spray',
-        price: 18.99,
-        description: 'Sacred white sage and crystal-infused spray for energetic cleansing and purification.',
-        image: 'images/products/sage-spray.jpg',
+    'quiet-ember': {
+        id: 'quiet-ember',
+        name: 'Quiet Ember - Sleep & Relaxation Elixir',
+        price: 22.00,
+        description: 'A gentle evening elixir crafted in deep reverence to Gaia\'s nighttime medicines and the ancestors who understood the sacred art of rest. Designed to guide you into peaceful slumber when the mind won\'t quiet.',
+        image: 'images/quiet-ember.jpg',
         category: 'apothecary'
     },
-    'moon-cycle-tea': {
-        id: 'moon-cycle-tea',
-        name: 'Moon Cycle Herbal Tea',
-        price: 16.99,
-        description: 'A nurturing blend of red raspberry leaf, nettle, and rose hips for feminine wellness.',
-        image: 'images/products/moon-tea.jpg',
+    'womack-snake-root': {
+        id: 'womack-snake-root',
+        name: 'Womack Snake Root Elixir - Ancestral Lineage Tonic',
+        price: 24.00,
+        description: 'A bold, lineage-rooted elixir crafted to honor Gaia\'s medicine and the Womack ancestors who prepared this tonic before us. Made with Fireball whiskey to echo the original family recipe.',
+        image: 'images/Womack_SnakeRoot.png',
         category: 'apothecary'
     },
-    'chakra-oil-set': {
-        id: 'chakra-oil-set',
-        name: 'Chakra Balancing Oil Set',
-        price: 89.99,
-        description: 'Complete set of seven chakra oils infused with corresponding crystals and essential oils.',
-        image: 'images/products/chakra-oils.jpg',
+    'body-alchemist': {
+        id: 'body-alchemist',
+        name: 'Body Alchemist Elixir - Metabolic & Inflammation Support',
+        price: 20.00,
+        description: 'A handcrafted elixir created with gratitude to Gaia and the ancestral healers who taught us how to transform the body from within. Designed to support digestion and reduce inflammation.',
+        image: 'images/Body_Alchemist.png',
         category: 'apothecary'
     },
-    'sleep-pillow-mist': {
-        id: 'sleep-pillow-mist',
-        name: 'Dreamy Sleep Pillow Mist',
-        price: 22.99,
-        description: 'Lavender and chamomile mist to promote restful sleep and peaceful dreams.',
-        image: 'images/products/sleep-mist.jpg',
+    'internal-renewal': {
+        id: 'internal-renewal',
+        name: 'Internal Renewal Elixir - Detox & Lymphatic Flow Support',
+        price: 20.00,
+        description: 'A gentle renewal tonic crafted in reverence to Gaia\'s cleansing plants and the ancestral stewards who understood the rhythms of the body. Designed to support liver health and lymphatic flow.',
+        image: 'images/Internal_Renewal.png',
         category: 'apothecary'
     },
-    'flower-of-life-pendant': {
-        id: 'flower-of-life-pendant',
-        name: 'Flower of Life Crystal Pendant',
-        price: 45.99,
-        description: 'Hand-wrapped crystal pendant featuring the sacred Flower of Life geometry.',
-        image: 'images/products/flower-pendant.jpg',
+    'desert-pain-salve': {
+        id: 'desert-pain-salve',
+        name: 'Desert Pain Salve - Rabbitbrush Relief Cream',
+        price: 14.00,
+        description: 'A deeply soothing salve handcrafted in honor of Gaia\'s desert medicines. This formula begins with a slow, sun-infused rabbitbrush olive oil for inflammation and muscle soreness.',
+        image: 'images/Desert_Balm.png',
+        category: 'apothecary'
+    },
+    'moonroot-harmony': {
+        id: 'moonroot-harmony',
+        name: 'MoonRoot Harmony Cream',
+        price: 15.00,
+        description: 'A gently nourishing botanical cream handcrafted to support hormonal balance, emotional regulation, and the natural rhythms of the female body through all seasons of life.',
+        image: 'images/Moonroot_Harmony.png',
+        category: 'apothecary'
+    },
+    'flower-of-life-coasters': {
+        id: 'flower-of-life-coasters',
+        name: 'Flower of Life Coaster Set',
+        price: 25.00,
+        description: 'A laser-engraved wooden coaster set inspired by the sacred geometry of the Flower of Life. This meaningful set includes four coasters, each featuring clean, dark engraving.',
+        image: 'images/Flower_Of_Life_Coasters.png',
         category: 'sacred'
     },
-    'merkaba-meditation-set': {
-        id: 'merkaba-meditation-set',
-        name: 'Merkaba Meditation Set',
-        price: 67.99,
-        description: 'Crystal merkaba with meditation guide for ascending consciousness and energy work.',
-        image: 'images/products/merkaba-set.jpg',
+    'tree-of-life-meditation': {
+        id: 'tree-of-life-meditation',
+        name: 'Tree of Life Meditation Board',
+        price: 38.00,
+        description: 'A laser-cut wooden meditation board inspired by the timeless symbolism of the Tree of Life — a sacred emblem of grounding, growth, and interconnectedness.',
+        image: 'images/Tree_of_Life_jpg.png',
         category: 'sacred'
     },
-    'geometric-altar-cloth': {
-        id: 'geometric-altar-cloth',
-        name: 'Sacred Geometry Altar Cloth',
-        price: 39.99,
-        description: 'Hand-printed altar cloth featuring multiple sacred geometric patterns.',
-        image: 'images/products/altar-cloth.jpg',
+    'sacred-geometry-keychain': {
+        id: 'sacred-geometry-keychain',
+        name: 'Sacred Geometry Keychain',
+        price: 15.00,
+        description: 'Carry a symbol of ancient protection and clarity wherever you go. This handcrafted wooden keychain features a precise laser-engraved Flower of Life.',
+        image: 'images/Key_Chain.png',
         category: 'sacred'
     },
-    'crystal-grid-board': {
-        id: 'crystal-grid-board',
-        name: 'Seed of Life Grid Board',
-        price: 78.99,
-        description: 'Wooden crystal grid board engraved with the Seed of Life pattern.',
-        image: 'images/products/grid-board.jpg',
+    'herb-stripper': {
+        id: 'herb-stripper',
+        name: 'Herb Stripper',
+        price: 20.00,
+        description: 'A handcrafted wooden herb stripper designed to make the process of harvesting and preparing herbs simple, efficient, and intentional.',
+        image: 'images/Herb_Stripper.png',
         category: 'sacred'
-    },
-    'protection-bundle': {
-        id: 'protection-bundle',
-        name: 'Protection Bundle',
-        price: 55.99,
-        description: 'Complete protection kit with sage, palo santo, black tourmaline, and blessing oil.',
-        image: 'images/products/protection-bundle.jpg',
-        category: 'apothecary'
-    },
-    'manifestation-candle': {
-        id: 'manifestation-candle',
-        name: 'Manifestation Ritual Candle',
-        price: 28.99,
-        description: 'Hand-poured soy candle infused with herbs and crystals for manifestation work.',
-        image: 'images/products/manifestation-candle.jpg',
-        category: 'apothecary'
     }
 };
 
