@@ -1,6 +1,18 @@
 // Main JavaScript for The Root & Resonance Website
 
-// Product Data for Snipcart
+// Shopify Configuration
+const SHOPIFY_CONFIG = {
+    domain: 'the-root-and-resonance.myshopify.com',
+    storefrontAccessToken: '7ba7d84a0a7849cd540d9519bcfc26ef'
+};
+
+// Shopify Client
+let ShopifyClient;
+
+// Shopping Cart
+let cart = [];
+
+// Product Data - This will be replaced with Shopify data
 const apothecaryProducts = [
     {
         id: "quiet-thorn",
@@ -127,45 +139,163 @@ function initializeWebsite() {
     setupProductFiltering();
     setupContactForm();
     setupScrollAnimations();
+    setupShopifyIntegration();
     renderApothecaryProducts();
     renderSacredCreations();
     setupIntersectionObserver();
-    
-    // Debug Snipcart initialization
-    console.log('Website initialized. Checking Snipcart...');
-    
-    // Add event listener for cart button debugging
-    setTimeout(() => {
-        const cartButton = document.querySelector('.snipcart-checkout');
-        if (cartButton) {
-            console.log('Cart button found:', cartButton);
-            cartButton.addEventListener('click', function(e) {
-                console.log('Cart button clicked!', e);
-                console.log('Snipcart object:', window.Snipcart);
-                if (!window.Snipcart) {
-                    console.error('Snipcart not loaded!');
-                    e.preventDefault();
-                }
-            });
-        } else {
-            console.error('Cart button not found!');
+    setupCartButton();
+}
+
+// Initialize Shopify Integration
+async function setupShopifyIntegration() {
+    try {
+        // Initialize Shopify Buy SDK
+        ShopifyClient = ShopifyBuy.buildClient({
+            domain: SHOPIFY_CONFIG.domain,
+            storefrontAccessToken: SHOPIFY_CONFIG.storefrontAccessToken
+        });
+        
+        console.log('Shopify client initialized successfully');
+        
+        // Load products from Shopify
+        await loadShopifyProducts();
+        
+    } catch (error) {
+        console.error('Error initializing Shopify:', error);
+        console.log('Falling back to static product data...');
+    }
+}
+
+// Load products from Shopify
+async function loadShopifyProducts() {
+    try {
+        const products = await ShopifyClient.product.fetchAll();
+        console.log('Loaded products from Shopify:', products);
+        
+        // Update local product data with Shopify data
+        if (products.length > 0) {
+            updateProductsWithShopifyData(products);
+        }
+    } catch (error) {
+        console.error('Error loading Shopify products:', error);
+    }
+}
+
+// Update local products with Shopify data
+function updateProductsWithShopifyData(shopifyProducts) {
+    shopifyProducts.forEach(product => {
+        // Find matching local product by title similarity
+        const localProduct = [...apothecaryProducts, ...sacredCreations].find(local => 
+            local.name.toLowerCase().includes(product.title.toLowerCase()) ||
+            product.title.toLowerCase().includes(local.name.toLowerCase())
+        );
+        
+        if (localProduct) {
+            localProduct.shopifyId = product.id;
+            localProduct.shopifyVariantId = product.variants[0].id;
+            localProduct.shopifyHandle = product.handle;
+            localProduct.shopifyPrice = parseFloat(product.variants[0].price);
+            console.log('Matched product:', localProduct.name, 'with Shopify ID:', product.id);
+        }
+    });
+}
+
+// Add to Cart function
+async function addToCart(productId, variantId, quantity = 1) {
+    try {
+        if (!ShopifyClient) {
+            console.error('Shopify client not initialized');
+            return;
         }
         
-        if (window.Snipcart) {
-            console.log('Snipcart is loaded and ready');
-            console.log('Snipcart API:', window.Snipcart);
-        } else {
-            console.log('Snipcart not yet loaded, waiting...');
-            // Try again in a few seconds
-            setTimeout(() => {
-                if (window.Snipcart) {
-                    console.log('Snipcart loaded on retry');
-                } else {
-                    console.error('Snipcart failed to load');
-                }
-            }, 3000);
-        }
-    }, 2000);
+        // Create a checkout
+        let checkout = await ShopifyClient.checkout.create();
+        
+        // Add line item to checkout
+        const lineItemsToAdd = [{
+            variantId: variantId,
+            quantity: quantity
+        }];
+        
+        checkout = await ShopifyClient.checkout.addLineItems(checkout.id, lineItemsToAdd);
+        
+        console.log('Product added to cart:', checkout);
+        
+        // Update cart UI
+        updateCartCount(checkout.lineItems.length);
+        
+        // Show success message
+        showAddToCartSuccess();
+        
+        // Store checkout ID for later use
+        localStorage.setItem('shopify-checkout-id', checkout.id);
+        localStorage.setItem('shopify-checkout-url', checkout.webUrl);
+        
+        return checkout;
+        
+    } catch (error) {
+        console.error('Error adding to cart:', error);
+        showAddToCartError();
+    }
+}
+
+// Setup Cart Button functionality
+function setupCartButton() {
+    const cartButton = document.getElementById('cart-button');
+    if (cartButton) {
+        cartButton.addEventListener('click', () => {
+            const checkoutUrl = localStorage.getItem('shopify-checkout-url');
+            if (checkoutUrl) {
+                window.open(checkoutUrl, '_blank');
+            } else {
+                alert('Your cart is empty. Add some products first!');
+            }
+        });
+    }
+}
+
+// Update cart count in UI
+function updateCartCount(count) {
+    const cartCount = document.getElementById('cart-count');
+    if (cartCount) {
+        cartCount.textContent = count || 0;
+    }
+}
+
+// Show success message
+function showAddToCartSuccess() {
+    // Create a temporary success message
+    const message = document.createElement('div');
+    message.className = 'fixed top-4 right-4 bg-sage text-cream px-6 py-3 rounded-lg shadow-lg z-50 transform transition-all duration-300';
+    message.innerHTML = '✓ Added to cart!';
+    document.body.appendChild(message);
+    
+    // Remove message after 3 seconds
+    setTimeout(() => {
+        message.style.opacity = '0';
+        setTimeout(() => {
+            if (document.body.contains(message)) {
+                document.body.removeChild(message);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// Show error message
+function showAddToCartError() {
+    const message = document.createElement('div');
+    message.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform transition-all duration-300';
+    message.innerHTML = '✗ Error adding to cart. Please try again.';
+    document.body.appendChild(message);
+    
+    setTimeout(() => {
+        message.style.opacity = '0';
+        setTimeout(() => {
+            if (document.body.contains(message)) {
+                document.body.removeChild(message);
+            }
+        }, 300);
+    }, 3000);
 }
 
 // Mobile Menu Toggle
@@ -255,8 +385,10 @@ function renderApothecaryProducts() {
     const productGrid = document.getElementById('product-grid');
     
     if (productGrid) {
-        productGrid.innerHTML = apothecaryProducts.map(product => `
-            <div class="product-card p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300" data-category="${product.category}">
+        productGrid.innerHTML = apothecaryProducts.map(product => {
+            const disclaimerText = getProductDisclaimer(product);
+            return `
+            <div class="product-card bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300" data-category="${product.category}">
                 <div class="aspect-square mb-4 overflow-hidden rounded-lg">
                     <img src="${product.image}" 
                          alt="${product.name}" 
@@ -264,24 +396,20 @@ function renderApothecaryProducts() {
                          onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjOUNBRjg4Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iI0Y1RjVEQyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPiR7product.name}</dGV4dD48L3N2Zz4='">
                 </div>
                 <h3 class="font-playfair text-xl font-semibold text-charcoal mb-2">${product.name}</h3>
-                <p class="text-muted text-sm mb-3 leading-relaxed">${product.description}</p>
-                <div class="flex justify-between items-center">
-                    <span class="font-semibold text-lg text-gold">${product.price}</span>
-                    <button class="px-4 py-2 bg-sage text-cream rounded-full hover:bg-gold transition-colors duration-300 text-sm font-medium">
-                        View Details
+                <p class="text-muted text-sm mb-3 leading-relaxed">${product.description.length > 100 ? product.description.substring(0, 100) + '...' : product.description}</p>
+                <div class="flex justify-between items-center mb-3">
+                    <span class="font-playfair text-2xl font-bold text-gold">$${(product.shopifyPrice || product.price).toFixed(2)}</span>
+                    <button onclick="handleAddToCart('${product.shopifyId || product.id}', '${product.shopifyVariantId || product.id}', '${product.name}')" 
+                            class="add-to-cart-btn px-6 py-2 bg-sage text-cream rounded-full hover:bg-gold hover:text-charcoal transition-all duration-300 text-sm font-medium">
+                        Add to Cart
                     </button>
                 </div>
+                <button onclick="showProductModal('${product.id}')" class="w-full px-4 py-2 border border-sage text-sage rounded-full hover:bg-sage hover:text-cream transition-colors duration-300 text-sm font-medium">
+                    View Details
+                </button>
+                ${disclaimerText ? `<div class="mt-3 text-xs text-muted italic border-t border-sage/20 pt-3">${disclaimerText}</div>` : ''}
             </div>
-        `).join('');
-        
-        // Add click event to view details buttons
-        const detailButtons = productGrid.querySelectorAll('button');
-        detailButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                showProductModal(button);
-            });
-        });
+        `}).join('');
     }
 }
 
@@ -291,7 +419,7 @@ function renderSacredCreations() {
     
     if (sacredGrid) {
         sacredGrid.innerHTML = sacredCreations.map(item => `
-            <div class="product-card p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+            <div class="product-card bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
                 <div class="aspect-square mb-4 overflow-hidden rounded-lg">
                     <img src="${item.image}" 
                          alt="${item.name}" 
@@ -299,24 +427,19 @@ function renderSacredCreations() {
                          onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjRDRBRjM3Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzM2NDU0RiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPiR7item.name}</dGV4dD48L3N2Zz4='">
                 </div>
                 <h3 class="font-playfair text-xl font-semibold text-charcoal mb-2">${item.name}</h3>
-                <p class="text-muted text-sm mb-3 leading-relaxed">${item.description}</p>
-                <div class="flex justify-between items-center">
-                    <span class="font-semibold text-lg text-gold">$${item.price.toFixed(2)}</span>
-                    <button class="px-4 py-2 bg-sage text-cream rounded-full hover:bg-gold transition-colors duration-300 text-sm font-medium">
-                        View Details
+                <p class="text-muted text-sm mb-3 leading-relaxed">${item.description.length > 100 ? item.description.substring(0, 100) + '...' : item.description}</p>
+                <div class="flex justify-between items-center mb-3">
+                    <span class="font-playfair text-2xl font-bold text-gold">$${(item.shopifyPrice || item.price).toFixed(2)}</span>
+                    <button onclick="handleAddToCart('${item.shopifyId || item.id}', '${item.shopifyVariantId || item.id}', '${item.name}')" 
+                            class="add-to-cart-btn px-6 py-2 bg-sage text-cream rounded-full hover:bg-gold hover:text-charcoal transition-all duration-300 text-sm font-medium">
+                        Add to Cart
                     </button>
                 </div>
+                <button onclick="showSacredCreationModal('${item.id}')" class="w-full px-4 py-2 border border-sage text-sage rounded-full hover:bg-sage hover:text-cream transition-colors duration-300 text-sm font-medium">
+                    View Details
+                </button>
             </div>
         `).join('');
-        
-        // Add click event to view details buttons
-        const detailButtons = sacredGrid.querySelectorAll('button');
-        detailButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                showSacredCreationModal(button);
-            });
-        });
     }
 }
 

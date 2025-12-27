@@ -1,17 +1,22 @@
-<!DOCTYPE html>
+<!DOCT    <meta name="description" content="Artisan apothecary and sacred geometry creations crafted with intention in Cortez, Colorado">
+    <meta name="author" content="The Root & Resonance LLC">PE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Root & Resonance - Handcrafted Apothecary & Sacred Creations</title>
-    <meta name="description" content="Artisan apothecary and sacred geometry creations crafted with intention in Cortez, Colorado">
-    <meta name="author" content="The Root & Resonance LLC">
+    <meta name="description" content="Artisan apothecary and sacred geometry creations crafted with intention in Cortez, Colorado">        data-api-key="MTZlZGQ5Y2EtODM5Ny00MGQ5LTk3Y2UtNmZmZGQwZWM5ZmExNjM4OTcxNzI2NjMyODU0NzA0"    <meta name="author" content="The Root & Resonance LLC">
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;500&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Snipcart CSS -->
+    <link rel="preconnect" href="https://app.snipcart.com">
+    <link rel="preconnect" href="https://cdn.snipcart.com">
+    <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.6.2/default/snipcart.css" />
     
     <script>
         tailwind.config = {
@@ -69,12 +74,12 @@
                     <a href="#about" class="nav-link text-charcoal hover:text-gold transition-colors duration-300">About</a>
                     <a href="#contact" class="nav-link text-charcoal hover:text-gold transition-colors duration-300">Contact</a>
                     
-                    <!-- Cart Button - Will be updated for Shopify -->
-                    <button id="cart-button" class="flex items-center text-charcoal hover:text-gold transition-colors duration-300 relative">
+                    <!-- Snipcart Cart Button -->
+                    <button class="snipcart-checkout flex items-center text-charcoal hover:text-gold transition-colors duration-300 relative">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 1.5M7 13l1.5 1.5M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"></path>
                         </svg>
-                        <span id="cart-count" class="ml-1">0</span>
+                        <span class="snipcart-items-count ml-1"></span>
                     </button>
                 </div>
                 <button class="md:hidden text-charcoal hover:text-gold" id="mobile-menu-btn">
@@ -333,12 +338,28 @@
             </div>
         </div>
     </footer>
+
+    <!-- Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
+    
+    <!-- Snipcart -->
+    <script>
+        window.SnipcartSettings = {
+            publicApiKey: "MTZlZGQ5Y2EtODM5Ny00MGQ5LTk3Y2UtNmZmZGQwZWM5ZmExNjM4OTcxNzI2NjMyODU0NzA0",
+            loadStrategy: "manual",
+            modalStyle: "side",
+            currency: "usd"
+        };
+    </script>
+    <script src="https://cdn.snipcart.com/themes/v3.6.2/default/snipcart.js"></script>
+    <div 
+        hidden 
+        id="snipcart" 
+        data-api-key="MTZlZGQ5Y2EtODM5Ny00MGQ5LTk3Y2UtNmZmZGQwZWM5ZmExNjM4OTcxNzI2NjMyODU0NzA0" 
+        data-config-modal-style="side">
+    </div>
     
     <!-- Scripts -->
-    <script src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"></script>
     <script src="js/main.js"></script>
-    
-    <!-- Shopify Buy Button will be added here -->
-    
 </body>
 </html>
