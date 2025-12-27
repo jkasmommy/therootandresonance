@@ -1,18 +1,93 @@
 // Main JavaScript for The Root & Resonance Website
 
-// Shopify Configuration
-const SHOPIFY_CONFIG = {
-    domain: 'the-root-and-resonance.myshopify.com',
-    storefrontAccessToken: '7ba7d84a0a7849cd540d9519bcfc26ef'
+// Shopify Product Handles (URL slugs)
+const SHOPIFY_PRODUCTS = {
+    'quiet-thorn': 'quiet-thorn-headache-tension-relief-elixir',
+    'quiet-ember': 'quiet-ember-sleep-relaxation-elixir',
+    'womack-snake-root': 'womack-snake-root-elixir-ancestral-lineage-tonic',
+    'body-alchemist': 'body-alchemist-elixir-metabolic-inflammation-support',
+    'internal-renewal': 'internal-renewal-elixir-detox-lymphatic-flow-support',
+    'desert-pain-salve': 'desert-pain-salve-rabbitbrush-relief-cream',
+    'moonroot-harmony': 'moonroot-harmony-cream',
+    'flower-of-life-coasters': 'flower-of-life-coaster-set',
+    'tree-of-life-meditation': 'tree-of-life-meditation-board',
+    'sacred-geometry-keychain': 'sacred-geometry-keychain',
+    'herb-stripper': 'herb-stripper'
 };
 
-// Shopify Client
-let ShopifyClient;
+// DOM Content Loaded
+document.addEventListener('DOMContentLoaded', function() {
+    initializeWebsite();
+});
 
-// Shopping Cart
-let cart = [];
+// Initialize Website Functions
+function initializeWebsite() {
+    setupMobileMenu();
+    setupSmoothScrolling();
+    setupProductFiltering();
+    setupContactForm();
+    setupScrollAnimations();
+    renderApothecaryProducts();
+    renderSacredCreations();
+    setupIntersectionObserver();
+    setupCartButton();
+    
+    console.log('Website initialized with Shopify redirect integration');
+}
 
-// Product Data - This will be replaced with Shopify data
+// Setup Cart Button functionality
+function setupCartButton() {
+    const cartButton = document.getElementById('cart-button');
+    if (cartButton) {
+        cartButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            // Redirect to Shopify store
+            window.open('https://the-root-and-resonance.myshopify.com', '_blank');
+        });
+    }
+}
+
+// Handle Add to Cart - redirect to Shopify product page
+function handleAddToCart(productId, productName) {
+    console.log('Opening product in Shopify:', productName);
+    
+    // Get Shopify handle
+    const shopifyHandle = SHOPIFY_PRODUCTS[productId];
+    
+    if (shopifyHandle) {
+        const shopifyUrl = `https://the-root-and-resonance.myshopify.com/products/${shopifyHandle}`;
+        
+        // Show feedback
+        showMessage(`Opening ${productName} in our store...`, 'success');
+        
+        // Open Shopify product page
+        window.open(shopifyUrl, '_blank');
+    } else {
+        // Fallback to main store
+        showMessage(`Opening our store...`, 'info');
+        window.open('https://the-root-and-resonance.myshopify.com', '_blank');
+    }
+}
+
+// Show message feedback
+function showMessage(message, type = 'success') {
+    const bgColor = type === 'success' ? 'bg-sage' : type === 'error' ? 'bg-red-500' : 'bg-charcoal';
+    
+    const messageEl = document.createElement('div');
+    messageEl.className = `fixed top-4 right-4 ${bgColor} text-cream px-6 py-3 rounded-lg shadow-lg z-50 transform transition-all duration-300`;
+    messageEl.innerHTML = message;
+    document.body.appendChild(messageEl);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        messageEl.style.opacity = '0';
+        setTimeout(() => {
+            if (document.body.contains(messageEl)) {
+                document.body.removeChild(messageEl);
+            }
+        }, 300);
+    }, 3000);
+}
 const apothecaryProducts = [
     {
         id: "quiet-thorn",
@@ -90,7 +165,7 @@ const apothecaryProducts = [
 
 const sacredCreations = [
     {
-        id: 1,
+        id: "flower-of-life-coasters",
         name: "Flower of Life Coaster Set",
         price: 25.00,
         description: "A laser-engraved wooden coaster set inspired by the sacred geometry of the Flower of Life. This meaningful set includes four coasters, each featuring clean, dark engraving that honors the infinite interconnectedness of all creation. Perfect for bringing intentional beauty to your daily rituals of nourishment and pause. Due to the natural beauty of wood and the handmade engraving process, each piece may display slight variations in grain pattern and tone, making every set truly one of a kind.",
@@ -99,7 +174,7 @@ const sacredCreations = [
         dimensions: "4x4x1"
     },
     {
-        id: 2,
+        id: "tree-of-life-meditation",
         name: "Tree of Life Meditation Board",
         price: 38.00,
         description: "A laser-cut wooden meditation board inspired by the timeless symbolism of the Tree of Life — a sacred emblem of grounding, growth, and the interconnected nature of all beings. Carefully crafted from natural wood, this circular board features an intricate Tree of Life design, making it a powerful focal piece for meditation, breathwork, altar spaces, or moments of quiet contemplation. Designed to support intentional pauses and mindful presence, this meditation board invites you to center your awareness, connect with the earth, and return to balance. Each piece is thoughtfully made using a laser-cut process that highlights the organic beauty of the wood while maintaining clean, precise lines. Due to the natural characteristics of wood and the handmade nature of the cutting and finishing process, each meditation board will display subtle variations in grain, tone, and texture — ensuring that every piece is truly one of a kind.",
@@ -108,7 +183,7 @@ const sacredCreations = [
         dimensions: "8x8x1"
     },
     {
-        id: 3,
+        id: "sacred-geometry-keychain",
         name: "Sacred Geometry Keychain",
         price: 15.00,
         description: "Carry a symbol of ancient protection and clarity wherever you go. This handcrafted wooden keychain features a precise laser-engraved Flower of Life (or Metatron's Cube, if you upload both versions), offering a small yet powerful reminder of harmony, balance, and mindful intention throughout your day. Lightweight, durable, and beautifully engraved, it's perfect for keys, bags, backpacks, or as a daily grounding talisman you keep close. Features laser-engraved sacred geometry symbol, smooth natural wood surface, high-quality metal key ring, lightweight and travel-friendly design, perfect for grounding and everyday mindfulness. Each keychain is individually crafted from natural wood, so grain patterns, shading, and engraving depth may vary slightly, making every piece truly one-of-a-kind.",
@@ -117,7 +192,7 @@ const sacredCreations = [
         dimensions: "3x3x0.5"
     },
     {
-        id: 4,
+        id: "herb-stripper",
         name: "Herb Stripper",
         price: 20.00,
         description: "A handcrafted wooden herb stripper designed to make the process of harvesting and preparing herbs simple, efficient, and intentional. This crescent-shaped tool features multiple hole sizes for stripping leaves from a variety of herb stems, along with a comb-style edge for gently gathering and cleaning herbs with ease. Thoughtfully designed for herbalists, gardeners, and home apothecaries, this herb stripper supports mindful preparation and connection to plant medicine. Each piece is laser-cut from natural wood and finished by hand, creating a functional tool that is both practical and beautiful. Due to the natural characteristics of wood and the handmade cutting and finishing process, each herb stripper may display slight variations in grain, tone, and engraving, making every piece truly one of a kind.",
@@ -148,94 +223,36 @@ function initializeWebsite() {
 
 // Initialize Shopify Integration
 async function setupShopifyIntegration() {
+    console.log('Setting up simplified Shopify integration...');
+    // For now, we'll use direct product URLs to Shopify store
+    // This is simpler and more reliable than the Buy SDK
+}
+
+// Simplified Add to Cart function using direct Shopify URLs
+function addToCart(productHandle, variantId, quantity = 1) {
     try {
-        // Initialize Shopify Buy SDK
-        ShopifyClient = ShopifyBuy.buildClient({
-            domain: SHOPIFY_CONFIG.domain,
-            storefrontAccessToken: SHOPIFY_CONFIG.storefrontAccessToken
+        // Create direct add to cart URL for Shopify
+        const addToCartUrl = `https://${SHOPIFY_CONFIG.domain}/cart/add`;
+        const params = new URLSearchParams({
+            'items[0][id]': variantId || '',
+            'items[0][quantity]': quantity
         });
         
-        console.log('Shopify client initialized successfully');
+        // For now, redirect directly to the product page on Shopify
+        const productUrl = `https://${SHOPIFY_CONFIG.domain}/products/${productHandle}`;
         
-        // Load products from Shopify
-        await loadShopifyProducts();
-        
-    } catch (error) {
-        console.error('Error initializing Shopify:', error);
-        console.log('Falling back to static product data...');
-    }
-}
-
-// Load products from Shopify
-async function loadShopifyProducts() {
-    try {
-        const products = await ShopifyClient.product.fetchAll();
-        console.log('Loaded products from Shopify:', products);
-        
-        // Update local product data with Shopify data
-        if (products.length > 0) {
-            updateProductsWithShopifyData(products);
-        }
-    } catch (error) {
-        console.error('Error loading Shopify products:', error);
-    }
-}
-
-// Update local products with Shopify data
-function updateProductsWithShopifyData(shopifyProducts) {
-    shopifyProducts.forEach(product => {
-        // Find matching local product by title similarity
-        const localProduct = [...apothecaryProducts, ...sacredCreations].find(local => 
-            local.name.toLowerCase().includes(product.title.toLowerCase()) ||
-            product.title.toLowerCase().includes(local.name.toLowerCase())
-        );
-        
-        if (localProduct) {
-            localProduct.shopifyId = product.id;
-            localProduct.shopifyVariantId = product.variants[0].id;
-            localProduct.shopifyHandle = product.handle;
-            localProduct.shopifyPrice = parseFloat(product.variants[0].price);
-            console.log('Matched product:', localProduct.name, 'with Shopify ID:', product.id);
-        }
-    });
-}
-
-// Add to Cart function
-async function addToCart(productId, variantId, quantity = 1) {
-    try {
-        if (!ShopifyClient) {
-            console.error('Shopify client not initialized');
-            return;
-        }
-        
-        // Create a checkout
-        let checkout = await ShopifyClient.checkout.create();
-        
-        // Add line item to checkout
-        const lineItemsToAdd = [{
-            variantId: variantId,
-            quantity: quantity
-        }];
-        
-        checkout = await ShopifyClient.checkout.addLineItems(checkout.id, lineItemsToAdd);
-        
-        console.log('Product added to cart:', checkout);
-        
-        // Update cart UI
-        updateCartCount(checkout.lineItems.length);
+        console.log('Redirecting to Shopify product:', productUrl);
+        window.open(productUrl, '_blank');
         
         // Show success message
         showAddToCartSuccess();
         
-        // Store checkout ID for later use
-        localStorage.setItem('shopify-checkout-id', checkout.id);
-        localStorage.setItem('shopify-checkout-url', checkout.webUrl);
-        
-        return checkout;
+        return true;
         
     } catch (error) {
         console.error('Error adding to cart:', error);
         showAddToCartError();
+        return false;
     }
 }
 
@@ -244,12 +261,9 @@ function setupCartButton() {
     const cartButton = document.getElementById('cart-button');
     if (cartButton) {
         cartButton.addEventListener('click', () => {
-            const checkoutUrl = localStorage.getItem('shopify-checkout-url');
-            if (checkoutUrl) {
-                window.open(checkoutUrl, '_blank');
-            } else {
-                alert('Your cart is empty. Add some products first!');
-            }
+            // Redirect to Shopify store cart
+            const shopifyCartUrl = `https://${SHOPIFY_CONFIG.domain}/cart`;
+            window.open(shopifyCartUrl, '_blank');
         });
     }
 }
@@ -399,7 +413,7 @@ function renderApothecaryProducts() {
                 <p class="text-muted text-sm mb-3 leading-relaxed">${product.description.length > 100 ? product.description.substring(0, 100) + '...' : product.description}</p>
                 <div class="flex justify-between items-center mb-3">
                     <span class="font-playfair text-2xl font-bold text-gold">$${(product.shopifyPrice || product.price).toFixed(2)}</span>
-                    <button onclick="handleAddToCart('${product.shopifyId || product.id}', '${product.shopifyVariantId || product.id}', '${product.name}')" 
+                    <button onclick="handleAddToCart('${product.id}', '${product.name}')" 
                             class="add-to-cart-btn px-6 py-2 bg-sage text-cream rounded-full hover:bg-gold hover:text-charcoal transition-all duration-300 text-sm font-medium">
                         Add to Cart
                     </button>
@@ -430,7 +444,7 @@ function renderSacredCreations() {
                 <p class="text-muted text-sm mb-3 leading-relaxed">${item.description.length > 100 ? item.description.substring(0, 100) + '...' : item.description}</p>
                 <div class="flex justify-between items-center mb-3">
                     <span class="font-playfair text-2xl font-bold text-gold">$${(item.shopifyPrice || item.price).toFixed(2)}</span>
-                    <button onclick="handleAddToCart('${item.shopifyId || item.id}', '${item.shopifyVariantId || item.id}', '${item.name}')" 
+                    <button onclick="handleAddToCart('${item.id}', '${item.name}')" 
                             class="add-to-cart-btn px-6 py-2 bg-sage text-cream rounded-full hover:bg-gold hover:text-charcoal transition-all duration-300 text-sm font-medium">
                         Add to Cart
                     </button>
